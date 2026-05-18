@@ -1,0 +1,60 @@
+{
+  "agents": {
+    "mcgonagall": {
+      "persistent_name": "McGonagall",
+      "universe": "Harry Potter",
+      "role": "Lead",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "lupin": {
+      "persistent_name": "Lupin",
+      "universe": "Harry Potter",
+      "role": "Frontend Dev",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "snape": {
+      "persistent_name": "Snape",
+      "universe": "Harry Potter",
+      "role": "Backend Dev",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "hagrid": {
+      "persistent_name": "Hagrid",
+      "universe": "Harry Potter",
+      "role": "DevOps",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "flitwick": {
+      "persistent_name": "Flitwick",
+      "universe": "Harry Potter",
+      "role": "AI & Polish",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "hermione": {
+      "persistent_name": "Hermione",
+      "universe": "Harry Potter",
+      "role": "Documentation",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "colin": {
+      "persistent_name": "Colin",
+      "universe": "Harry Potter",
+      "role": "Screenshots",
+      "created_at": "2026-05-18T09:42:27Z",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}

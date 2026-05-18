@@ -1,0 +1,25 @@
+{
+  "universe_usage_history": [
+    {
+      "universe": "Harry Potter",
+      "repo": "GetStartedWebWorkshop",
+      "assigned_at": "2026-05-18T09:42:27Z"
+    }
+  ],
+  "assignment_cast_snapshots": {
+    "2026-05-18-initial": {
+      "assignment_id": "2026-05-18-initial",
+      "universe": "Harry Potter",
+      "agents": [
+        { "name": "McGonagall", "role": "Lead" },
+        { "name": "Lupin", "role": "Frontend Dev" },
+        { "name": "Snape", "role": "Backend Dev" },
+        { "name": "Hagrid", "role": "DevOps" },
+        { "name": "Flitwick", "role": "AI & Polish" },
+        { "name": "Hermione", "role": "Documentation" },
+        { "name": "Colin", "role": "Screenshots" }
+      ],
+      "created_at": "2026-05-18T09:42:27Z"
+    }
+  }
+}

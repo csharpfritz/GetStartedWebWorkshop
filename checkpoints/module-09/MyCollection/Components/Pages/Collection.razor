@@ -1,0 +1,361 @@
+@page "/collection"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@using MyCollection.Data
+@using MyCollection.Messages
+@using MyCollection.Models
+@using NServiceBus
+@inject CollectionContext Context
+@inject IWebHostEnvironment Env
+@inject IMessageSession MessageSession
+
+<PageTitle>My Collection</PageTitle>
+
+<h1>My Collection</h1>
+<p>Your items now include optional photos and background thumbnail processing.</p>
+
+<h2 class="h4 mt-4">Add a new item</h2>
+<div class="row g-3 align-items-end">
+    <div class="col-md-3">
+        <label for="newItemName" class="form-label">Item name</label>
+        <input id="newItemName" class="form-control" @bind="newItem.Name" />
+    </div>
+    <div class="col-md-3">
+        <label for="newItemDescription" class="form-label">Description</label>
+        <input id="newItemDescription" class="form-control" @bind="newItem.Description" />
+    </div>
+    <div class="col-md-2">
+        <div class="form-check mt-4">
+            <input id="newItemFavorite" type="checkbox" class="form-check-input" @bind="newItem.IsFavorite" />
+            <label for="newItemFavorite" class="form-check-label">Favorite</label>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label for="newItemPhoto" class="form-label">Photo (optional)</label>
+        <InputFile id="newItemPhoto" OnChange="OnNewFileSelected" accept="image/*" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" @onclick="AddItemAsync">Add</button>
+    </div>
+</div>
+
+<p class="mt-3">@statusMessage</p>
+
+@if (editItem is not null)
+{
+    <section class="card mt-4">
+        <div class="card-body">
+            <h2 class="h5">Edit item</h2>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="editItemName" class="form-label">Item name</label>
+                    <input id="editItemName" class="form-control" @bind="editItem.Name" />
+                </div>
+                <div class="col-md-5">
+                    <label for="editItemDescription" class="form-label">Description</label>
+                    <input id="editItemDescription" class="form-control" @bind="editItem.Description" />
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check">
+                        <input id="editItemFavorite" type="checkbox" class="form-check-input" @bind="editItem.IsFavorite" />
+                        <label for="editItemFavorite" class="form-check-label">Favorite</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="editItemPhoto" class="form-label">Photo (optional)</label>
+                    <InputFile id="editItemPhoto" OnChange="OnEditFileSelected" accept="image/*" class="form-control" />
+                </div>
+                <div class="col-md-1 d-flex gap-2">
+                    <button class="btn btn-success" @onclick="SaveEditAsync">Save</button>
+                    <button class="btn btn-outline-secondary" @onclick="CancelEdit">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@if (items.Count == 0)
+{
+    <p class="mt-4">No items in the database yet. Add your first one above.</p>
+}
+else
+{
+    <div class="mt-4">
+        @foreach (var item in items)
+        {
+            <div class="mb-3 d-flex gap-3 align-items-start">
+                <div>
+                    @if (item.PhotoFileName is not null)
+                    {
+                        <img src="@GetDisplayPhotoUrl(item)"
+                             alt="@($"{item.Name} photo")"
+                             class="img-thumbnail"
+                             style="width: 80px; height: 80px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="bg-light border d-flex align-items-center justify-content-center"
+                             style="width: 80px; height: 80px;">
+                            <span class="text-muted small">No photo</span>
+                        </div>
+                    }
+                </div>
+                <div class="flex-grow-1">
+                    <CollectionItemCard Item="item" />
+                    <div class="d-flex gap-2 mt-2">
+                        <button class="btn btn-outline-primary btn-sm" @onclick="() => StartEditAsync(item.Id)">
+                            Edit
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteItemAsync(item.Id)">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private static readonly string[] AllowedContentTypes =
+    [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp"
+    ];
+
+    private const long MaxFileSize = 5 * 1024 * 1024;
+
+    private List<CollectionItem> items = new();
+    private CollectionItem newItem = new() { DateAdded = DateTime.Today };
+    private CollectionItem? editItem;
+    private string statusMessage = "Loading items from the database...";
+    private IBrowserFile? selectedFile;
+    private IBrowserFile? editSelectedFile;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadItemsAsync();
+    }
+
+    private void OnNewFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+    }
+
+    private void OnEditFileSelected(InputFileChangeEventArgs e)
+    {
+        editSelectedFile = e.File;
+    }
+
+    private async Task LoadItemsAsync()
+    {
+        items = await Context.CollectionItems
+            .OrderByDescending(item => item.DateAdded)
+            .ThenBy(item => item.Name)
+            .ToListAsync();
+
+        statusMessage = items.Count == 0
+            ? "Your database is ready. Add your first item."
+            : $"Loaded {items.Count} item(s) from the database.";
+    }
+
+    private async Task<string?> SavePhotoAsync(IBrowserFile file)
+    {
+        if (file.Size > MaxFileSize)
+        {
+            statusMessage = "File is too large. Maximum allowed size is 5 MB.";
+            return null;
+        }
+
+        if (!AllowedContentTypes.Contains(file.ContentType))
+        {
+            statusMessage = "Only JPEG, PNG, GIF, and WebP images are allowed.";
+            return null;
+        }
+
+        var uploadsPath = Path.Combine(Env.WebRootPath, "uploads");
+        Directory.CreateDirectory(uploadsPath);
+
+        var extension = Path.GetExtension(file.Name);
+        var fileName = $"{Guid.NewGuid()}{extension}";
+        var filePath = Path.Combine(uploadsPath, fileName);
+
+        await using var stream = File.OpenWrite(filePath);
+        await file.OpenReadStream(MaxFileSize).CopyToAsync(stream);
+
+        return fileName;
+    }
+
+    private async Task AddItemAsync()
+    {
+        if (string.IsNullOrWhiteSpace(newItem.Name))
+        {
+            statusMessage = "Enter a name before adding an item.";
+            return;
+        }
+
+        string? savedFileName = null;
+
+        if (selectedFile is not null)
+        {
+            savedFileName = await SavePhotoAsync(selectedFile);
+            if (savedFileName is null)
+            {
+                return;
+            }
+
+            newItem.PhotoFileName = savedFileName;
+        }
+
+        newItem.DateAdded = DateTime.Today;
+        Context.CollectionItems.Add(newItem);
+        await Context.SaveChangesAsync();
+
+        if (savedFileName is not null)
+        {
+            await PublishPhotoUploadedEventAsync(newItem.Id, savedFileName);
+            statusMessage = $"Added: {newItem.Name}. Thumbnail processing started in the background.";
+        }
+        else
+        {
+            statusMessage = $"Added: {newItem.Name}";
+        }
+
+        newItem = new CollectionItem { DateAdded = DateTime.Today };
+        selectedFile = null;
+        await LoadItemsAsync();
+    }
+
+    private async Task PublishPhotoUploadedEventAsync(int itemId, string photoFileName)
+    {
+        var sourcePath = Path.Combine(Env.WebRootPath, "uploads", photoFileName);
+        var thumbnailFileName = $"{Path.GetFileNameWithoutExtension(photoFileName)}.webp";
+        var thumbnailPath = Path.Combine(Env.WebRootPath, "uploads", "thumbnails", thumbnailFileName);
+
+        var options = new PublishOptions();
+        options.ContinueExistingTraceOnReceive();
+
+        await MessageSession.Publish(
+            new ProcessPhotoUploaded
+            {
+                ItemId = itemId,
+                PhotoFileName = photoFileName,
+                OriginalPhotoPath = sourcePath,
+                ThumbnailPhotoPath = thumbnailPath
+            },
+            options);
+    }
+
+    private string GetDisplayPhotoUrl(CollectionItem item)
+    {
+        if (string.IsNullOrWhiteSpace(item.PhotoFileName))
+        {
+            return string.Empty;
+        }
+
+        var thumbnailFileName = $"{Path.GetFileNameWithoutExtension(item.PhotoFileName)}.webp";
+        var thumbnailPhysicalPath = Path.Combine(Env.WebRootPath, "uploads", "thumbnails", thumbnailFileName);
+
+        return File.Exists(thumbnailPhysicalPath)
+            ? $"/uploads/thumbnails/{thumbnailFileName}"
+            : $"/uploads/{item.PhotoFileName}";
+    }
+
+    private async Task StartEditAsync(int id)
+    {
+        editItem = await Context.CollectionItems
+            .AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == id);
+
+        if (editItem is null)
+        {
+            statusMessage = "That item could not be found.";
+        }
+    }
+
+    private void CancelEdit()
+    {
+        editItem = null;
+        editSelectedFile = null;
+        statusMessage = "Edit cancelled.";
+    }
+
+    private async Task SaveEditAsync()
+    {
+        if (editItem is null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(editItem.Name))
+        {
+            statusMessage = "Enter a name before saving the item.";
+            return;
+        }
+
+        var itemToUpdate = await Context.CollectionItems
+            .FirstOrDefaultAsync(item => item.Id == editItem.Id);
+
+        if (itemToUpdate is null)
+        {
+            statusMessage = "That item could not be found.";
+            return;
+        }
+
+        itemToUpdate.Name = editItem.Name;
+        itemToUpdate.Description = editItem.Description;
+        itemToUpdate.IsFavorite = editItem.IsFavorite;
+
+        if (editSelectedFile is not null)
+        {
+            var savedFileName = await SavePhotoAsync(editSelectedFile);
+            if (savedFileName is null)
+            {
+                return;
+            }
+
+            itemToUpdate.PhotoFileName = savedFileName;
+        }
+
+        await Context.SaveChangesAsync();
+
+        if (editSelectedFile is not null && itemToUpdate.PhotoFileName is not null)
+        {
+            await PublishPhotoUploadedEventAsync(itemToUpdate.Id, itemToUpdate.PhotoFileName);
+            statusMessage = $"Updated: {itemToUpdate.Name}. Thumbnail processing started in the background.";
+        }
+        else
+        {
+            statusMessage = $"Updated: {itemToUpdate.Name}";
+        }
+
+        editItem = null;
+        editSelectedFile = null;
+        await LoadItemsAsync();
+    }
+
+    private async Task DeleteItemAsync(int id)
+    {
+        var itemToDelete = await Context.CollectionItems.FindAsync(id);
+
+        if (itemToDelete is null)
+        {
+            statusMessage = "That item could not be found.";
+            return;
+        }
+
+        Context.CollectionItems.Remove(itemToDelete);
+        await Context.SaveChangesAsync();
+
+        if (editItem?.Id == id)
+        {
+            editItem = null;
+        }
+
+        statusMessage = $"Deleted: {itemToDelete.Name}";
+        await LoadItemsAsync();
+    }
+}

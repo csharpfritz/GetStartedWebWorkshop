@@ -1,0 +1,89 @@
+@page "/collection"
+@rendermode InteractiveServer
+@using MyCollection.Models
+
+<PageTitle>My Collection</PageTitle>
+
+<h1>My Collection</h1>
+<p>Module 4 builds on the page from Module 3 by replacing simple strings with real C# objects.</p>
+
+<div class="row g-3 align-items-end">
+    <div class="col-md-4">
+        <label for="newItemName" class="form-label">Item name</label>
+        <input id="newItemName" class="form-control" @bind="newItemName" />
+    </div>
+    <div class="col-md-5">
+        <label for="newItemDescription" class="form-label">Description</label>
+        <input id="newItemDescription" class="form-control" @bind="newItemDescription" />
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-primary w-100" @onclick="AddItem">Add item</button>
+    </div>
+</div>
+
+<p class="mt-3">@statusMessage</p>
+
+@if (items.Count == 0)
+{
+    <p>No items added yet.</p>
+}
+else
+{
+    <div class="mt-3">
+        @foreach (var item in items)
+        {
+            <div class="mb-3">
+                <CollectionItemCard Item="item" />
+                <button class="btn btn-outline-secondary btn-sm mt-2" @onclick="() => ToggleFavorite(item)">
+                    @(item.IsFavorite ? "Remove favorite" : "Mark as favorite")
+                </button>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private string newItemName = string.Empty;
+    private string newItemDescription = string.Empty;
+    private string statusMessage = "Ready to add your first item.";
+    private List<CollectionItem> items = new()
+    {
+        new CollectionItem
+        {
+            Name = "Starter item",
+            Description = "This item shows how Module 4 continues from the Module 3 page.",
+            DateAdded = DateTime.Today
+        }
+    };
+
+    private void AddItem()
+    {
+        if (string.IsNullOrWhiteSpace(newItemName))
+        {
+            statusMessage = "Enter a name before adding an item.";
+            return;
+        }
+
+        var item = new CollectionItem
+        {
+            Name = newItemName,
+            Description = string.IsNullOrWhiteSpace(newItemDescription)
+                ? "Added from the Collection page."
+                : newItemDescription,
+            DateAdded = DateTime.Today
+        };
+
+        items.Add(item);
+        statusMessage = $"Added: {item.Name}";
+        newItemName = string.Empty;
+        newItemDescription = string.Empty;
+    }
+
+    private void ToggleFavorite(CollectionItem item)
+    {
+        item.IsFavorite = !item.IsFavorite;
+        statusMessage = item.IsFavorite
+            ? $"{item.Name} is now marked as a favorite."
+            : $"{item.Name} is no longer marked as a favorite.";
+    }
+}

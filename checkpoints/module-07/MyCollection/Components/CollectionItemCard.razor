@@ -1,0 +1,19 @@
+@using MyCollection.Models
+
+<article class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="h5 card-title mb-2">@Item.Name</h2>
+        <p class="card-text mb-2">@Item.Description</p>
+        <p class="text-body-secondary mb-0">Added on @Item.DateAdded.ToShortDateString()</p>
+
+        @if (Item.IsFavorite)
+        {
+            <span class="badge text-bg-success mt-3">Favorite</span>
+        }
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public CollectionItem Item { get; set; } = default!;
+}

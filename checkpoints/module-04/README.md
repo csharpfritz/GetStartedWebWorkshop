@@ -1,0 +1,1 @@
+This folder contains the completed code after finishing Module 4: C# Basics in Context. The checkpoint now includes the MyCollection Blazor app, a separate MyCollection.Models class library, a local project reference between them, and the enhanced Collection page with a CollectionItemCard component.

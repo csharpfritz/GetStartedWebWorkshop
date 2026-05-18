@@ -1,0 +1,20 @@
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.3.4">
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.DevTunnels" Version="9.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyCollection\MyCollection.csproj" />
+    <ProjectReference Include="..\MyCollection.ThumbnailWorker\MyCollection.ThumbnailWorker.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>b3a75258-f6f6-4df4-b46b-ed475157e2cf</UserSecretsId>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,41 @@
+@page "/collection"
+@rendermode InteractiveServer
+
+<PageTitle>My Collection</PageTitle>
+
+<h1>My Collection</h1>
+
+<div class="mb-3">
+    <label for="newItemName" class="form-label">Item Name</label>
+    <input id="newItemName" class="form-control" @bind="newItemName" />
+</div>
+
+<button class="btn btn-primary" @onclick="AddItem">Add Item</button>
+
+@if (items.Count == 0)
+{
+    <p class="mt-3">No items added yet.</p>
+}
+else
+{
+    <ul class="mt-3">
+        @foreach (var item in items)
+        {
+            <li>@item</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<string> items = new();
+    private string newItemName = string.Empty;
+
+    private void AddItem()
+    {
+        if (!string.IsNullOrWhiteSpace(newItemName))
+        {
+            items.Add(newItemName);
+            newItemName = string.Empty;
+        }
+    }
+}

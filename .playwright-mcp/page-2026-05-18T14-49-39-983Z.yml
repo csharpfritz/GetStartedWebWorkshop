@@ -1,0 +1,45 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - heading "My Collection" [level=1] [ref=e3]
+    - paragraph [ref=e4]: Track your items and keep them organized in one simple page.
+  - main [ref=e5]:
+    - generic [ref=e6]:
+      - heading "About This Page" [level=2] [ref=e7]
+      - paragraph [ref=e8]: This is a simple collection page built with semantic HTML.
+      - paragraph [ref=e9]: It uses a little CSS to add color, spacing, and a cleaner layout.
+    - generic [ref=e10]:
+      - heading "Featured Item" [level=2] [ref=e11]
+      - img "Placeholder image for a collection item" [ref=e12]
+      - paragraph [ref=e13]: A featured item can appear here with a larger image.
+    - generic [ref=e14]:
+      - heading "Collection Items" [level=2] [ref=e15]
+      - list [ref=e16]:
+        - listitem [ref=e17]: Item 1
+        - listitem [ref=e18]: Item 2
+        - listitem [ref=e19]: Item 3
+      - paragraph [ref=e20]:
+        - text: Learn more about web development at
+        - link "MDN Web Docs" [ref=e21] [cursor=pointer]:
+          - /url: https://developer.mozilla.org/
+        - text: .
+    - generic [ref=e22]:
+      - heading "Add a New Item" [level=2] [ref=e23]
+      - paragraph [ref=e24]: Use this form to describe the next item you want to add to your collection.
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: Item name
+          - textbox "Item name" [ref=e28]:
+            - /placeholder: Enter an item name
+        - generic [ref=e29]:
+          - generic [ref=e30]: Year added
+          - spinbutton "Year added" [ref=e31]: "2026"
+        - generic [ref=e32]:
+          - generic [ref=e33]: Upload a photo
+          - button "Upload a photo" [ref=e34]
+        - generic [ref=e35]:
+          - generic [ref=e36]: Notes
+          - textbox "Notes" [ref=e37]:
+            - /placeholder: Add a few details about this item.
+        - button "Add" [ref=e38] [cursor=pointer]
+  - contentinfo [ref=e39]:
+    - paragraph [ref=e40]: "Built during Module 2: HTML Foundations."

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f6f8fb;
+            color: #1f2937;
+        }
+
+        header,
+        main,
+        footer {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        h1,
+        h2 {
+            color: #1d4ed8;
+        }
+
+        section {
+            background-color: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .form-section p {
+            margin-top: 0;
+            color: #4b5563;
+        }
+
+        .item-form {
+            display: grid;
+            gap: 0.85rem;
+        }
+
+        .item-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .item-form input,
+        .item-form textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font: inherit;
+            background-color: #f8fafc;
+        }
+
+        .item-form textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .item-form button {
+            justify-self: start;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 999px;
+            background-color: #2563eb;
+            color: white;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .item-form button:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Collection</h1>
+        <p>Track your items and keep them organized in one simple page.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>About This Page</h2>
+            <p>This is a simple collection page built with semantic HTML.</p>
+            <p>It uses a little CSS to add color, spacing, and a cleaner layout.</p>
+        </section>
+
+        <section>
+            <h2>Featured Item</h2>
+            <img
+                src="https://placehold.co/400x250?text=Collection+Item"
+                alt="Placeholder image for a collection item">
+            <p>A featured item can appear here with a larger image.</p>
+        </section>
+
+        <section>
+            <h2>Collection Items</h2>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </ul>
+
+            <p>
+                Learn more about web development at
+                <a href="https://developer.mozilla.org/">MDN Web Docs</a>.
+            </p>
+        </section>
+
+        <section class="form-section" id="add-item-form">
+            <h2>Add a New Item</h2>
+            <p>Use this form to describe the next item you want to add to your collection.</p>
+
+            <form class="item-form">
+                <div>
+                    <label for="item-name">Item name</label>
+                    <input
+                        type="text"
+                        id="item-name"
+                        name="item-name"
+                        placeholder="Enter an item name">
+                </div>
+
+                <div>
+                    <label for="item-year">Year added</label>
+                    <input
+                        type="number"
+                        id="item-year"
+                        name="item-year"
+                        min="1900"
+                        max="2100"
+                        value="2026">
+                </div>
+
+                <div>
+                    <label for="item-photo">Upload a photo</label>
+                    <input
+                        type="file"
+                        id="item-photo"
+                        name="item-photo">
+                </div>
+
+                <div>
+                    <label for="item-notes">Notes</label>
+                    <textarea
+                        id="item-notes"
+                        name="item-notes"
+                        placeholder="Add a few details about this item."></textarea>
+                </div>
+
+                <button type="submit">Add</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built during Module 2: HTML Foundations.</p>
+    </footer>
+</body>
+</html>
