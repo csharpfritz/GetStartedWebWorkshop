@@ -36,12 +36,12 @@ Follow the modules in order. Each builds on the previous one.
 | 3 | Blazor Fundamentals | Master components, data binding, and event handling | [Module 3 →](docs/03-blazor-fundamentals.md) |
 | 4 | C# Basics in Context | Variables, types, models, and methods | [Module 4 →](docs/04-csharp-basics.md) |
 | 5 | Git & GitHub | Version control, repositories, and commits | [Module 5 →](docs/05-git-and-github.md) |
-| 6 | Data with EF Core & SQLite | Persist data using Entity Framework Core | [Module 6 →](docs/06-ef-core-sqlite.md) |
+| 6 | Data with EF Core & SQLite | Persist data using Entity Framework Core | [Module 6 →](docs/06-entity-framework.md) |
 | 7 | Aspire & Dev Tunnels | App orchestration, observability, and external access | [Module 7 →](docs/07-aspire.md) |
 | 8 | Photo Capture & Upload | Add camera access and file upload functionality | [Module 8 →](docs/08-photo-upload.md) |
 | 9 | NServiceBus Processing | Image thumbnails and background messaging | [Module 9 →](docs/09-nservicebus.md) |
 | 10 | Add AI | AI-powered image analysis with Agent Framework | [Module 10 →](docs/10-add-ai.md) |
-| 11 | Deploy to Azure | Ship your app to the cloud | [Module 11 →](docs/11-deploy-to-azure.md) |
+| 11 | Deploy to Azure | Ship your app to the cloud | Coming soon |
 
 ## Checkpoints
 

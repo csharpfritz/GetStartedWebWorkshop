@@ -32,11 +32,11 @@ Visual Studio Code (often called "VS Code") is where you'll write all your code.
 
 ### 2. **.NET SDK** (Development Tools)
 
-The .NET SDK gives your computer the tools needed to run and build web applications. You need version 8 or later (we recommend the latest).
+The .NET SDK gives your computer the tools needed to run and build web applications. You need version 10.0 or later.
 
 **Steps:**
 1. Go to https://dotnet.microsoft.com/download
-2. Download the latest LTS (Long-Term Support) version for your operating system
+2. Download the **.NET 10** SDK for your operating system
 3. Run the installer and follow the setup steps
 4. When done, open a terminal or PowerShell and type:
    ```
@@ -44,7 +44,7 @@ The .NET SDK gives your computer the tools needed to run and build web applicati
    ```
 5. Press Enter
 
-**What you should see:** A version number (like `8.0.x` or higher). If you see a version number, you're good to go!
+**What you should see:** A version number (like `10.0.x` or higher). If you see a version number, you're good to go!
 
 > **Windows Tip:** To open a terminal, press `Win + R`, type `powershell`, and press Enter.
 
