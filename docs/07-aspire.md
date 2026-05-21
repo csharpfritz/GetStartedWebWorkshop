@@ -1,12 +1,12 @@
 # Module 7: Observability with .NET Aspire
 [← Previous Module](06-entity-framework.md) | [Back to README](../README.md)
-In this module, you will add Aspire to the `MyCollection` solution. Aspire gives you a local orchestration layer and a dashboard for observability. That means you can start your app through a single entry point, inspect structured logs, watch request traces, and see runtime metrics without building your own monitoring setup first.
+In this module, you'll add Aspire to the `MyCollection` solution. Aspire gives you a local orchestration layer and a dashboard for observability. That means you can start your app through a single entry point, inspect structured logs, watch request traces, and see runtime metrics without building your own monitoring setup first.
 Even though `MyCollection` is still a single Blazor app, this is the right time to add Aspire. It makes local development easier today, and it gives you a clean path for future services later.
-By the end of this module, you will install the Aspire CLI, run `aspire init` in the solution root, review the generated `MyCollection.AppHost` and `MyCollection.ServiceDefaults` projects, wire your app into the AppHost, and run everything with `aspire run`.
+By the end of this module, you'll install the Aspire CLI, run `aspire init` in the solution root, review the generated `MyCollection.AppHost` and `MyCollection.ServiceDefaults` projects, wire your app into the AppHost, and run everything with `aspire run`.
 ---
 ## 1. What Is Aspire?
 **Expected outcome:** You understand what Aspire does and why it is useful even when your solution has only one app project.
-Aspire is a **development-time orchestration and observability stack** for distributed applications. That sentence sounds bigger than your app right now, so let us make it concrete.
+Aspire is a **development-time orchestration and observability stack** for distributed applications. That sentence sounds bigger than your app right now, so let's make it concrete.
 In this workshop, Aspire gives you three immediate benefits:
 1. A **single way to start the system**
 2. A **dashboard** for logs, traces, metrics, and resource status
@@ -17,7 +17,7 @@ Right now, your app already does real work:
 - It stores data with EF Core and SQLite
 - It is about to add phone-friendly photo uploads in Module 8
 - It will continue to grow across later modules
-That means you have already reached the point where visibility matters. When something breaks, you want answers to questions like these:
+That means you've already reached the point where visibility matters. When something breaks, you want answers to questions like these:
 - Did the app start correctly?
 - Is the HTTP endpoint healthy?
 - What requests are coming in?
@@ -25,13 +25,13 @@ That means you have already reached the point where visibility matters. When som
 - Is the app using more CPU or memory than expected?
 Aspire helps answer those questions without asking you to build a custom diagnostics system first.
 ### Orchestration does not only mean microservices
-A common beginner mistake is to think, "Aspire is only useful if I already have five services." That is not true.
+A common beginner mistake is to think, "Aspire is only useful if I already have five services." That's not true.
 Even with one project, Aspire still helps because:
 - The dashboard is valuable on day one
 - You start learning a modern cloud-native development workflow early
 - Your application already becomes easier to reason about
 - Adding a worker, cache, queue, or database server later becomes much simpler
-In other words, Aspire is not just about **many services**. It is also about **clear relationships, consistent startup, and observability**.
+In other words, Aspire isn't just about **many services**. It's also about **clear relationships, consistent startup, and observability**.
 ### What this module is not doing
 This module does **not**:
 - Add authentication or authorization
@@ -49,14 +49,14 @@ Older .NET Aspire tutorials often start with this command:
 ```bash
 dotnet workload install aspire
 ```
-Do **not** use that command. That is the old workflow, and it is no longer the right setup path.
+Do **not** use that command. That's the old workflow, and it's no longer the right setup path.
 Aspire now ships with its own standalone CLI. That CLI is what creates AppHosts, adds integrations, and runs orchestration.
 ### Install the CLI
 Follow the install instructions from the Aspire site:
 ```bash
 curl -sSL https://aspire.dev/install.sh | bash
 ```
-If you are on Windows and prefer native PowerShell, use the PowerShell command shown on the same install page. The important idea is the same in both cases: **you install Aspire through the Aspire CLI installer, not through `dotnet workload install`.**
+If you are on Windows and prefer native PowerShell, use the PowerShell command shown on the same install page. The important idea is the same in both cases: **you install Aspire through the Aspire CLI installer, not through `dotnet workload install`.** Don't let old blog posts steer you wrong here.
 ### Verify the installation
 After the install finishes, verify it:
 ```bash
@@ -135,36 +135,37 @@ The AppHost is just the project that knows how the pieces fit together.
 A typical generated AppHost project file looks like this:
 `MyCollection.AppHost\MyCollection.AppHost.csproj`
 ```xml
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Aspire.AppHost.Sdk/13.3.4">
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyCollection\MyCollection.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <IsAspireHost>true</IsAspireHost>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MyCollection\MyCollection.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="13.x.x" />
-  </ItemGroup>
+
 </Project>
 ```
 A few important details:
-- `<IsAspireHost>true</IsAspireHost>` marks this as an Aspire AppHost project
+- `Sdk="Aspire.AppHost.Sdk/13.3.4"` marks this as an Aspire AppHost project using the SDK-style format
 - The project references your application project
-- The `Aspire.Hosting.AppHost` package provides the orchestration APIs
-- The exact target framework and package version may be slightly newer on your machine
+- The exact SDK version may be slightly newer on your machine
+- The exact target framework and package version may differ slightly
 ### The AppHost source code
 Once the AppHost knows about the `MyCollection` project reference, it can register your app as an Aspire resource. That code looks like this:
 `MyCollection.AppHost\Program.cs`
 ```csharp
 var builder = DistributedApplication.CreateBuilder(args);
-builder.AddProject<Projects.MyCollection>("mycollection");
+
+var web = builder.AddProject<Projects.MyCollection>("mycollection");
+
 builder.Build().Run();
 ```
-This file is intentionally small. That is a good thing. The AppHost should describe your architecture, not duplicate your application logic.
+This file is intentionally small. That's a good thing. The AppHost should describe your architecture, not duplicate your application logic.
 ### Breaking down the three lines that matter
 #### `DistributedApplication.CreateBuilder(args)`
 This creates the distributed application builder. It is the AppHost equivalent of the builder pattern you already know from ASP.NET Core.
@@ -423,6 +424,8 @@ The dashboard is a local development tool. Aspire prints a login token so the da
 Once the browser opens, you should see at least one resource:
 - `mycollection`
 The dashboard should show that resource moving into a running state. From there, you can inspect logs, traces, metrics, endpoints, and health.
+
+![Aspire dashboard showing the mycollection resource in a running state](img/7-AspireDashboard.png)
 ### Important reminder about the old flow
 These are the commands we are **not** using:
 ```bash
@@ -439,34 +442,43 @@ Further reading: [https://aspire.dev/get-started/first-app/](https://aspire.dev/
 ## 8. Adding a Dev Tunnel for Phone Access
 **Expected outcome:** Your Aspire-hosted app can be reached through a public URL so you can open it on your phone during the workshop.
 Photo upload works best when you can test it from a real phone browser. A **dev tunnel** gives your local development server a public internet URL that securely forwards traffic back to your machine.
-That matters in this workshop because phone cameras are part of the story. If your app is only available on `localhost`, your phone cannot reach it. Once the app has a dev tunnel URL, you can open the site on your phone, use the camera, and upload photos directly into your local app.
-### Step 1: Expose the app from the AppHost
-Update `MyCollection.AppHost\Program.cs` so the project resource allows an external HTTP endpoint:
+That matters in this workshop because phone cameras are part of the story. If your app is only available on `localhost`, your phone can't reach it. Once the app has a dev tunnel URL, you can open the site on your phone, use the camera, and upload photos directly into your local app.
+### Step 1: Add the DevTunnels package to the AppHost
+First, add the dev tunnels hosting package to your AppHost project:
+```bash
+dotnet add .\MyCollection.AppHost\MyCollection.AppHost.csproj package Aspire.Hosting.DevTunnels
+```
+### Step 2: Configure the dev tunnel in the AppHost
+Update `MyCollection.AppHost\Program.cs` to add a dev tunnel that references your web app:
 ```csharp
 var builder = DistributedApplication.CreateBuilder(args);
-builder.AddProject<Projects.MyCollection>("mycollection")
-    .WithExternalHttpEndpoints();
+
+var web = builder.AddProject<Projects.MyCollection>("mycollection");
+
+builder.AddDevTunnel("mycollection-tunnel")
+    .WithReference(web)
+    .WithAnonymousAccess();
+
 builder.Build().Run();
 ```
-The important line is `.WithExternalHttpEndpoints()`. In Aspire, that tells the AppHost that this project can participate in external endpoint exposure instead of staying local-only.
-### Step 2: Sign in to the `devtunnel` CLI if needed
-If you have not used dev tunnels before, install the CLI from Microsoft's dev tunnel documentation and sign in:
+The important part is `builder.AddDevTunnel()`. This tells Aspire to create a dev tunnel automatically when you run the app. `.WithReference(web)` connects the tunnel to your web project, and `.WithAnonymousAccess()` allows anyone with the URL to reach it — which is what you want for testing on your phone during the workshop.
+### Step 3: Sign in to dev tunnels if needed
+If you haven't used dev tunnels before, you'll need to sign in. The Aspire CLI will prompt you if needed, or you can sign in manually:
 ```bash
 devtunnel user login
 ```
-If the CLI is already installed and you are signed in, you only need to verify that `devtunnel --version` works.
-### Step 3: Create a tunnel for your app
-With Aspire running, find the app's HTTP port in the dashboard or terminal output, then create and host a public tunnel for that port:
-```bash
-devtunnel create --allow-anonymous
-devtunnel host -p <your-http-port>
+### Step 4: Run and confirm the public URL
+Run the app with `aspire run`. In the terminal output or dashboard, you'll see the dev tunnel URL. It'll look something like:
+```text
+https://abc123-5007.usw2.devtunnels.ms
 ```
-For example, if `MyCollection` is running on `http://localhost:5007`, you would host port `5007`. The CLI will print a public URL. Keep that URL handy because it is the address you will open from your phone.
-### Step 4: Confirm the public URL works
-Open the public URL in your desktop browser first. Then scan or type the same URL on your phone.
-You should be able to reach your locally running `MyCollection` app from both devices. That is the whole goal: local development on your machine, real camera access from your phone.
+
+![Terminal output showing the dev tunnel public URL after aspire run](img/7-DevTunnelUrl.png)
+
+Open that URL in your desktop browser first. Then scan or type the same URL on your phone.
+You should be able to reach your locally running `MyCollection` app from both devices. That's the whole goal: local development on your machine, real camera access from your phone.
 ### What just happened
-You connected Aspire's external endpoint support with a dev tunnel public URL. That gives the next module a clean on-ramp: when you add photo capture and upload, attendees can open the app on their phones instead of being stuck on `localhost`.
+You added a dev tunnel directly in the Aspire AppHost using `builder.AddDevTunnel()`. No manual CLI tunnel management needed — Aspire handles it for you. That gives the next module a clean on-ramp: when you add photo capture and upload, attendees can open the app on their phones instead of being stuck on `localhost`.
 ---
 ## 9. Exploring the Aspire Dashboard
 **Expected outcome:** You can use the dashboard to inspect resources, structured logs, traces, and metrics for `MyCollection`.
@@ -502,6 +514,9 @@ The big improvement is that the logs are part of a resource-aware dashboard. You
 ### Distributed traces
 Open the traces view next. A trace records how a request or operation moves through the system.
 With a single web app, your trace view is still useful. You can watch request activity and timing, and you can start building the mental model that later scales to multi-service apps.
+
+![Aspire dashboard traces tab showing request spans and timing](img/7-AspireTraces.png)
+
 In this module, traces help you answer questions like:
 - Which request just happened?
 - How long did it take?

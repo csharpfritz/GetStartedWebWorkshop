@@ -2,9 +2,9 @@
 
 [← Previous Module](04-csharp-basics.md) | [Back to README](../README.md)
 
-In this module, you will take the `MyCollection` work from Module 4 and start tracking it with Git. That means your Blazor app and your `MyCollection.Models` class library will have a history you can review, save, and share on GitHub.
+In this module, you'll take the `MyCollection` work from Module 4 and start tracking it with Git. That means your Blazor app and your `MyCollection.Models` class library will have a history you can review, save, and share on GitHub.
 
-Git can feel strange at first because it adds new words like repository, stage, commit, and remote. That is normal. Go slowly, run the commands exactly as shown, and use `git status` often to see what is happening.
+Git can feel strange at first because it adds new words like repository, stage, commit, and remote. That's normal. Go slowly, run the commands exactly as shown, and use `git status` often to see what's happening.
 
 ---
 
@@ -12,9 +12,7 @@ Git can feel strange at first because it adds new words like repository, stage, 
 
 **Expected outcome:** You understand what version control does and why it helps with your `MyCollection` project.
 
-Version control is a system for tracking changes to your files over time.
-
-A good beginner analogy is a **save point in a game**. Each time you make a useful change, you can create a save point. If something breaks later, you can go back and see what changed. Git is also a little like a very smart **undo history** that lasts across days, weeks, and even across different computers.
+Version control is a system for tracking changes to your files over time. I like to think of it as a **save point in a game**. Each time you make a useful change, you can create a save point. If something breaks later, you can go back and see what changed. Git is also a little like a very smart **undo history** that lasts across days, weeks, and even across different computers.
 
 For your project, that means you can:
 
@@ -65,7 +63,7 @@ git config --global user.name "Jeffrey Fritz"
 git config --global user.email "jeffrey@example.com"
 ```
 
-These settings do **not** control how you sign into GitHub. They simply label your commits so Git knows who made them.
+These settings do **not** control how you sign into GitHub. They simply label your commits so Git knows who made them. Don't overthink it.
 
 You can review your settings with:
 
@@ -98,7 +96,7 @@ git init
 
 Git will create a hidden folder named `.git`. That folder is where Git stores its history, branch information, and repository settings.
 
-You do not edit the `.git` folder yourself, and you do not upload it as a normal project folder. Git manages it for you.
+You do not edit the `.git` folder yourself, and you don't upload it as a normal project folder. Git manages it for you.
 
 After `git init`, your folder becomes a **repository**. A repository is just a project folder that Git is tracking.
 
@@ -186,6 +184,8 @@ Why skip the README and `.gitignore` here? Because you already have a local repo
 
 After the repository is created, GitHub will show you a page with commands for pushing an existing repository. Keep that page open and copy the repository URL.
 
+![GitHub's "Create a new repository" page with the repository name filled in](img/5-GitHubNewRepo.png)
+
 It will look something like this:
 
 ```text
@@ -212,6 +212,8 @@ You can verify it with:
 git remote -v
 ```
 
+I like to use a primary branch named `main`.  It's the main branch that we work with, and all content bubbles up eventually to that branch.  Older conventions used to reference the primary branch as `master`, but for this workshop we'll refer to this primary branch as `main`.
+
 If your default branch is already named `main`, you can push with:
 
 ```bash
@@ -233,6 +235,8 @@ After the push finishes, refresh the repository page on GitHub. You should now s
 - Your first commit
 - A `main` branch
 - The latest commit message near the top of the page
+
+![GitHub repository page after first push, showing project files and commit history](img/5-GitHubPushSuccess.png)
 
 At that point, your code exists in two places: on your computer and on GitHub.
 
@@ -448,7 +452,7 @@ You now know the beginner Git workflow for your `MyCollection` app:
 - View history with `git log --oneline`
 - Push your work to GitHub with `git push`
 
-From this point on, use Git as a habit while you build. Small commits made often are much easier to understand than one giant commit at the end.
+From this point on, use Git as a habit while you build. Small commits made often are MUCH easier to understand than one giant commit at the end.
 
 ---
 ## Next Module

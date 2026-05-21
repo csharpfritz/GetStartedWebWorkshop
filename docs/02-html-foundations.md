@@ -6,7 +6,7 @@ In this module, you'll build the first version of our **collection app** page us
 
 HTML is the language that gives a web page its **structure**. It tells the browser what each piece of content is: a heading, a paragraph, a list, an image, or a link. The browser reads your HTML file from top to bottom, understands the tags you wrote, and turns that structure into the page you see on screen.
 
-Today, our page will be **static**. That means it will show content, but it will not respond to clicks or save data yet. Later in the workshop, Blazor will take this same page structure and make it interactive.
+Today, our page will be **static**. That means it'll show content, but it won't respond to clicks or save data yet. Later in the workshop, Blazor will take this same page structure and make it interactive.
 
 ## 1. Understand what HTML does
 
@@ -200,44 +200,41 @@ Here's a stronger layout for our collection app:
 <body>
     <header>
         <h1>My Collection</h1>
-        <p>Track your items and keep a photo with each one.</p>
+        <p>Track your items and keep them organized in one simple page.</p>
     </header>
 
     <main>
         <section>
+            <h2>About This Page</h2>
+            <p>This is a simple collection page built with semantic HTML.</p>
+            <p>It uses a little CSS to add color, spacing, and a cleaner layout.</p>
+        </section>
+
+        <section>
             <h2>Featured Item</h2>
             <img
-                src="https://placehold.co/400x250?text=Featured+Item"
-                alt="Placeholder image for a featured collection item">
-            <p>This area will eventually show the item a user is focused on.</p>
+                src="https://placehold.co/400x250?text=Collection+Item"
+                alt="Placeholder image for a collection item">
+            <p>A featured item can appear here with a larger image.</p>
         </section>
 
         <section>
             <h2>Collection Items</h2>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </ul>
 
-            <article>
-                <h3>Vintage Camera</h3>
-                <p>A classic film camera from the collection.</p>
-            </article>
-
-            <article>
-                <h3>Comic Book Issue #1</h3>
-                <p>A favorite item with a cover photo to upload later.</p>
-            </article>
-        </section>
-
-        <section>
-            <h2>Next Steps</h2>
-            <ol>
-                <li>Add interactivity with Blazor components</li>
-                <li>Let users enter new items</li>
-                <li>Upload and display real item photos</li>
-            </ol>
+            <p>
+                Learn more about web development at
+                <a href="https://developer.mozilla.org/">MDN Web Docs</a>.
+            </p>
         </section>
     </main>
 
     <footer>
-        <p>Workshop demo app: Get Started with Web Development</p>
+        <p>Built during Module 2: HTML Foundations.</p>
     </footer>
 </body>
 </html>
@@ -248,9 +245,6 @@ Let's explain the new semantic elements:
 - `<header>` holds introductory content for the page.
 - `<main>` contains the main content of the page. A page should have one main area.
 - `<section>` groups related content together.
-- `<article>` holds a self-contained piece of content, like one collection item.
-- `<h3>` is a third-level heading used inside a smaller section.
-- `<ol>` means **ordered list**. It creates a numbered list.
 - `<footer>` contains closing information about the page.
 
 Why this matters:
@@ -259,21 +253,21 @@ Why this matters:
 - The structure is easier to style later with CSS.
 - The structure is easier to turn into Blazor components later.
 
-For example, one `<article>` today could become a reusable **collection item component** in Blazor.
+For example, one `<section>` today could become a reusable **collection item component** in Blazor.
 
 ### What you should see
 
 You should see a page with clear sections:
 
 - A top heading and introduction
+- An "About This Page" section
 - A featured item area with an image
-- A list of example collection items
-- A numbered list of future app features
+- A list of collection items
 - A footer at the bottom
 
 ## Full page example
 
-Here is a complete beginner-friendly version of the collection page you can keep as a reference:
+Here's the complete version of the collection page that matches this module's checkpoint. This is what your page should look like when you're done:
 
 ```html
 <!DOCTYPE html>
@@ -309,53 +303,145 @@ Here is a complete beginner-friendly version of the collection page you can keep
             margin-bottom: 1rem;
             border-radius: 0.5rem;
         }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .form-section p {
+            margin-top: 0;
+            color: #4b5563;
+        }
+
+        .item-form {
+            display: grid;
+            gap: 0.85rem;
+        }
+
+        .item-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .item-form input,
+        .item-form textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font: inherit;
+            background-color: #f8fafc;
+        }
+
+        .item-form textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .item-form button {
+            justify-self: start;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 999px;
+            background-color: #2563eb;
+            color: white;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .item-form button:hover {
+            background-color: #1d4ed8;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>My Collection</h1>
-        <p>Track your items and upload a photo for each one.</p>
+        <p>Track your items and keep them organized in one simple page.</p>
     </header>
 
     <main>
         <section>
-            <h2>About This App</h2>
-            <p>This page is the starting point for our workshop collection app.</p>
-            <p>Right now it is static HTML. Soon it will become an interactive Blazor app.</p>
+            <h2>About This Page</h2>
+            <p>This is a simple collection page built with semantic HTML.</p>
+            <p>It uses a little CSS to add color, spacing, and a cleaner layout.</p>
         </section>
 
         <section>
             <h2>Featured Item</h2>
             <img
                 src="https://placehold.co/400x250?text=Collection+Item"
-                alt="Placeholder photo for a collection item">
-            <p>One featured item can appear here with a larger photo.</p>
+                alt="Placeholder image for a collection item">
+            <p>A featured item can appear here with a larger image.</p>
         </section>
 
         <section>
             <h2>Collection Items</h2>
-            <article>
-                <h3>Item 1</h3>
-                <p>A sample item in the collection.</p>
-            </article>
-            <article>
-                <h3>Item 2</h3>
-                <p>Another sample item that could have its own uploaded photo.</p>
-            </article>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </ul>
+
+            <p>
+                Learn more about web development at
+                <a href="https://developer.mozilla.org/">MDN Web Docs</a>.
+            </p>
         </section>
 
-        <section>
-            <h2>Planned Features</h2>
-            <ul>
-                <li>Add new collection items</li>
-                <li>Upload item photos</li>
-                <li>Show details for each item</li>
-            </ul>
+        <section class="form-section" id="add-item-form">
+            <h2>Add a New Item</h2>
+            <p>Use this form to describe the next item you want to add to your collection.</p>
+
+            <form class="item-form">
+                <div>
+                    <label for="item-name">Item name</label>
+                    <input
+                        type="text"
+                        id="item-name"
+                        name="item-name"
+                        placeholder="Enter an item name">
+                </div>
+
+                <div>
+                    <label for="item-year">Year added</label>
+                    <input
+                        type="number"
+                        id="item-year"
+                        name="item-year"
+                        min="1900"
+                        max="2100"
+                        value="2026">
+                </div>
+
+                <div>
+                    <label for="item-photo">Upload a photo</label>
+                    <input
+                        type="file"
+                        id="item-photo"
+                        name="item-photo">
+                </div>
+
+                <div>
+                    <label for="item-notes">Notes</label>
+                    <textarea
+                        id="item-notes"
+                        name="item-notes"
+                        placeholder="Add a few details about this item."></textarea>
+                </div>
+
+                <button type="submit">Add</button>
+            </form>
         </section>
     </main>
 
     <footer>
-        <p>Built during the Get Started with Web Development workshop.</p>
+        <p>Built during Module 2: HTML Foundations.</p>
     </footer>
 </body>
 </html>
@@ -371,7 +457,7 @@ Here is a complete beginner-friendly version of the collection page you can keep
 
 HTML gives your page structure and meaning. CSS stands for **Cascading Style Sheets**, and it controls how that structure looks on the screen. In simple terms, HTML says "this is a heading" or "this is a list," while CSS says "make the heading blue" or "add space around this section."
 
-You do not need to learn all of CSS today. For now, think of it as the presentation layer for your page. A small amount of CSS can make the same HTML easier to read and feel more polished without changing the page's content.
+You don't need to learn all of CSS today. For now, think of it as the presentation layer for your page. A small amount of CSS can make the same HTML easier to read and feel more polished without changing the page's content.
 
 ```html
 <head>

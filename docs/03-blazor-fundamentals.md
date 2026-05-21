@@ -2,7 +2,7 @@
 
 [← Previous Module](02-html-foundations.md) | [Back to README](../README.md)
 
-This is the module where your Blazor app begins. You will create a new project named `MyCollection`, run it, and then make the home page interactive.
+This is the module where your Blazor app begins. We're going to create a new project named `MyCollection`, run it, and then make the home page interactive.
 
 By the end of this module, you will be able to:
 
@@ -37,7 +37,7 @@ When the template finishes, you will see a project with several important files 
 - `Components\Layout` - shared layout pieces like navigation
 - `wwwroot` - static files such as CSS and images
 
-You do not need to memorize everything yet. The important idea is that a Blazor app is made from components, and those components live in `.razor` files.
+You don't need to memorize everything yet. The important idea is that a Blazor app is made from components, and those components live in `.razor` files.
 
 ## Step 3: Run the app
 
@@ -52,7 +52,7 @@ When the app starts, open the local URL shown in the terminal. You should see th
 
 ## Step 4: Understand Blazor render modes
 
-Blazor can render your UI in different ways. For this workshop, you only need a clear beginner-friendly picture of the three main options.
+Blazor can render your UI in different ways. For this workshop, you only need a clear beginner-friendly picture of the three main options. Let's walk through them.
 
 ### Static SSR
 
@@ -89,7 +89,7 @@ Use this when you want more client-side execution in the browser.
 
 ### Which one are we using?
 
-For this workshop, use **Interactive Server** because it gives us live interactivity while keeping the setup simple.
+For this workshop, we're using **Interactive Server** because it gives us live interactivity while keeping the setup simple.
 
 ## Step 5: Meet your first component
 
@@ -101,10 +101,10 @@ A `.razor` file can contain:
 - Razor syntax such as `@page` and `@bind`
 - C# code inside an `@code` block
 
-Open `Components\Pages\Home.razor` and replace the main page content with something like this:
+Create a new file at `Components\Pages\Collection.razor` and add this content:
 
 ```razor
-@page "/"
+@page "/collection"
 @rendermode InteractiveServer
 
 <PageTitle>My Collection</PageTitle>
@@ -115,17 +115,17 @@ Open `Components\Pages\Home.razor` and replace the main page content with someth
 
 ### What each part means
 
-- `@page "/"` makes this component respond to the home page route
+- `@page "/collection"` makes this component respond to the `/collection` route
 - `@rendermode InteractiveServer` tells Blazor to use interactive server rendering for this component
 - `<PageTitle>` sets the text shown in the browser tab
 - `<h1>` is the visible page heading
 
 ## Step 6: Show data on the page
 
-Now add an `@code` block so the component can hold data.
+Now let's add an `@code` block so the component can hold data.
 
 ```razor
-@page "/"
+@page "/collection"
 @rendermode InteractiveServer
 
 <PageTitle>My Collection</PageTitle>
@@ -140,14 +140,14 @@ Now add an `@code` block so the component can hold data.
 
 `statusMessage` is a C# field on the component, and `@statusMessage` renders it into the page.
 
-This is one of the core ideas in Blazor: your component stores data in C#, and Razor markup displays that data.
+This is one of the core ideas in Blazor: your component stores data in C#, and Razor markup displays that data. Pretty cool, right?
 
 ## Step 7: Add data binding
 
 **Data binding** keeps a UI element and a C# value in sync.
 
 ```razor
-@page "/"
+@page "/collection"
 @rendermode InteractiveServer
 
 <PageTitle>My Collection</PageTitle>
@@ -166,10 +166,10 @@ As the user types in the text box, `newItemName` changes automatically.
 
 ## Step 8: Handle a button click and add items
 
-Now connect the UI to a method.
+Now let's connect the UI to a method.
 
 ```razor
-@page "/"
+@page "/collection"
 @rendermode InteractiveServer
 
 <PageTitle>My Collection</PageTitle>
@@ -248,6 +248,7 @@ Save the file and look for the updated page in the browser.
 - `@bind` handles simple data binding
 - `@onclick` connects a UI event to a C# method
 - `dotnet watch` helps you develop faster with hot reload
+- Navigate to `/collection` in your browser to see the interactive page
 
 ---
 ## Next Module

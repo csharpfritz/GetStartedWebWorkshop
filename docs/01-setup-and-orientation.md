@@ -2,7 +2,7 @@
 
 [← Back to README](../README.md)
 
-Welcome to **Get Started with Web Development**! This workshop will teach you how to build a real web application from scratch. In this module, you'll set up everything you need and get your first app running.
+Welcome to **Get Started with Web Development**! I'm going to teach you how to build a real web application from scratch. In this module, we'll set up everything you need and get your first app running.
 
 ## What You'll Build
 
@@ -20,7 +20,7 @@ Before we start, make sure you have these three tools on your computer. Don't wo
 
 ### 1. **Visual Studio Code** (Your Code Editor)
 
-Visual Studio Code (often called "VS Code") is where you'll write all your code. It's like Microsoft Word, but for programming.
+Visual Studio Code (often called "VS Code") is where you'll write all your code. Think of it like Microsoft Word, but for programming.
 
 **Steps:**
 1. Go to https://code.visualstudio.com
@@ -64,7 +64,7 @@ Git helps track changes to your code over time. Think of it like "Track Changes"
 
 ## VS Code Extensions (Supercharge Your Editor)
 
-Extensions are add-ons that make VS Code smarter for specific programming languages. We need a couple of these to make web development easier.
+Extensions are add-ons that make VS Code smarter for specific programming languages. We need a couple of these to make web development easier — and trust me, they're worth it.
 
 ### Installing Extensions
 
@@ -119,7 +119,7 @@ Let's fire up the app and see it run!
    ```
 3. Press Enter
 
-This command starts your app and watches for changes. When you edit files, the app will automatically reload!
+This command starts your app and watches for changes. When you edit files, the app automatically reloads — no manual restart needed!
 
 **What you should see:**
 - The terminal shows messages like `Building...` and then `Now listening on: https://localhost:7224`
@@ -131,7 +131,7 @@ This command starts your app and watches for changes. When you edit files, the a
 
 ### Your App is Running!
 
-Congratulations! You've successfully started a real web application. The `dotnet watch` command is still running in the terminal — it will keep your app up and running. You can leave it there.
+Congratulations! You've successfully started a real web application. The `dotnet watch` command is still running in the terminal — it'll keep your app up and running. You can leave it there.
 
 **To stop the app later:** Press `Ctrl + C` in the terminal.
 
@@ -177,7 +177,7 @@ Press `Ctrl + Shift + P` to open the Command Palette. This is like a search box 
 
 ## You're Ready!
 
-You've completed Module 1! Your environment is set up, and you have a running web app.
+You've completed Module 1! Your environment is set up, and you've got a running web app.
 
 **Checkpoint:** Before moving to the next module, make sure:
 - ✅ Visual Studio Code is installed and running

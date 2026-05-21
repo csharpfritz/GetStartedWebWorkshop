@@ -2,9 +2,9 @@
 
 [← Previous Module](03-blazor-fundamentals.md) | [Back to README](../README.md)
 
-In Module 3, you created the `MyCollection` Blazor app and built a simple `/collection` page with a `List<string>`. In this module, you will keep building that same page, but you will organize the C# more like a real application.
+In Module 3, you created the `MyCollection` Blazor app and built a simple `/collection` page with a `List<string>`. In this module, you'll keep building that same page, but we're going to organize the C# more like a real application.
 
-Instead of keeping everything inside the Blazor project, you will create a separate class library named `MyCollection.Models`. That library will hold the `CollectionItem` model and any helper classes you add later.
+Instead of keeping everything inside the Blazor project, we'll create a separate class library named `MyCollection.Models`. That library will hold the `CollectionItem` model and any helper classes we add later.
 
 ## What you'll build in this module
 
@@ -56,7 +56,7 @@ Right now, your `Collection.razor` page probably looks something like this:
 }
 ```
 
-That page works, but every item is only a string. We are ready for a richer type.
+That page works, but every item is only a string. We're ready for a richer type.
 
 ## Step 2: Create a class library project
 
@@ -73,7 +73,7 @@ In this workshop, the library will hold:
 - The `CollectionItem` model
 - Any helper classes you create later
 
-This matters because separating models and logic from the UI is a common real-world pattern. It keeps your application easier to grow and easier to test.
+This matters because separating models and logic from the UI is a common real-world pattern. It keeps your application easier to grow and easier to test. I do this in every production app I build.
 
 ## Step 3: Add a local project reference
 
@@ -92,7 +92,7 @@ A **project reference** tells .NET:
 
 After this, `MyCollection` can use classes from `MyCollection.Models`.
 
-This is also good preparation for later modules. Soon you will add NuGet packages with a similar command such as:
+This is also good preparation for later modules. Soon we'll add NuGet packages with a similar command such as:
 
 ```powershell
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
@@ -123,7 +123,7 @@ This class teaches several core C# ideas:
 - `bool` stores `true` or `false`
 - **Properties** hold data on a class
 
-Now the Blazor page can work with real objects instead of plain strings.
+Now the Blazor page can work with real objects instead of plain strings. That's a big step forward!
 
 ## Step 5: Use the model in the Blazor page
 
@@ -368,6 +368,10 @@ dotnet build
 ```
 
 Because `MyCollection` references `MyCollection.Models`, building the Blazor project also builds the class library.
+
+Run the app with `dotnet watch` and navigate to `/collection`. You should see the form with name, description, and favorite fields, plus items rendered with the `CollectionItemCard` component:
+
+![Collection page with typed model, showing items with names, descriptions, and favorite toggle](img/4-CollectionWithModel.png)
 
 ---
 ## Next Module

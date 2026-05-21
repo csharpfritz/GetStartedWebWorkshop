@@ -2,7 +2,7 @@
 
 [← Previous Module](05-git-and-github.md) | [Back to README](../README.md)
 
-In this module, you will replace your in-memory collection list with a real database. You will keep using the `MyCollection` Blazor app from Modules 3 and 4, keep using the `CollectionItem` model from `MyCollection.Models`, and add Entity Framework Core with SQLite so your data still exists after the app restarts.
+In this module, we're going to replace your in-memory collection list with a real database. We'll keep using the `MyCollection` Blazor app from Modules 3 and 4, keep using the `CollectionItem` model from `MyCollection.Models`, and add Entity Framework Core with SQLite so your data survives an app restart.
 
 ---
 
@@ -18,18 +18,18 @@ That means:
 - The page looks correct
 - You stop the app
 - You start the app again
-- Everything is gone
+- Everything is gone!
 
 A **database** solves that problem. A database stores data on disk so your app can read it later.
 
-For this workshop, we will use **SQLite** because it is beginner-friendly:
+For this workshop, we'll use **SQLite** because it's beginner-friendly:
 
 - It stores data in a single file
 - It does not require a separate database server install
 - It works well for small projects and learning
 - It fits nicely with local development in VS Code
 
-By the end of this module, your `MyCollection` app will save collection items to a `MyCollection.db` file instead of losing them on every restart.
+By the end of this module, your `MyCollection` app will save collection items to a `MyCollection.db` file instead of losing them on every restart. That's a HUGE improvement.
 
 ---
 
@@ -39,7 +39,7 @@ By the end of this module, your `MyCollection` app will save collection items to
 
 This module is your first real introduction to **dependency injection**, often shortened to **DI**.
 
-Here is a beginner-friendly way to think about it:
+Here's a beginner-friendly way to think about it:
 
 > Instead of every part of your app building its own tools, it asks for the tools it needs, and the application hands those tools to it.
 
@@ -50,7 +50,7 @@ Imagine you are working at a table and need a marker.
 - **Without DI:** you leave the table, go find a marker, decide which one to use, and bring it back yourself
 - **With DI:** you say, "I need a marker," and someone hands you the marker that has already been chosen and prepared
 
-That is the basic idea of DI.
+That is the basic idea of DI. It sounds fancier than it is.
 
 In ASP.NET Core and Blazor:
 
@@ -706,6 +706,10 @@ At this point, your page supports all four operations:
 - **Read** items from SQLite
 - **Update** existing items
 - **Delete** items you no longer want
+
+Run the app and navigate to `/collection`. Your page should look something like this — a form at the top, items listed below with edit and delete buttons:
+
+![Collection page with full CRUD — add form, item list with edit and delete buttons](img/6-CollectionWithDatabase.png)
 
 ---
 

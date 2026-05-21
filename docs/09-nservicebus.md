@@ -2,9 +2,9 @@
 
 [← Previous Module](08-photo-upload.md) | [Back to README](../README.md)
 
-In this module, you will add a background worker to `MyCollection` using **NServiceBus**. Your Blazor app already saves uploaded photos to `wwwroot\uploads\` from Module 8, and your Aspire AppHost already orchestrates the solution from Module 7. Now you will connect those two ideas.
+In this module, you'll add a background worker to `MyCollection` using **NServiceBus**. Your Blazor app already saves uploaded photos to `wwwroot\uploads\` from Module 8, and your Aspire AppHost already orchestrates the solution from Module 7. Now we're going to connect those two ideas.
 
-Instead of doing every image task inside the upload request, you will publish an NServiceBus event after a photo is saved. A separate console application will subscribe to that event, resize the uploaded image into a real thumbnail, and save the thumbnail as a **WebP** file.
+Instead of doing every image task inside the upload request, you'll publish an NServiceBus event after a photo is saved. A separate console application will subscribe to that event, resize the uploaded image into a real thumbnail, and save the thumbnail as a **WebP** file.
 
 That gives you a more realistic architecture:
 
@@ -38,7 +38,7 @@ Right now, the photo upload flow from Module 8 is simple and direct:
 5. The app stores the filename in SQLite
 6. The page refreshes and displays the image
 
-That works well for a beginner app. It is exactly the right place to start.
+That works well for a beginner app. It's exactly the right place to start.
 
 But once you add more image work, the upload request starts carrying extra responsibility:
 
@@ -48,13 +48,13 @@ But once you add more image work, the upload request starts carrying extra respo
 - Potentially extract metadata later
 - Potentially run AI or moderation later
 
-Those extra jobs are not necessary for the user to get an immediate success response. The user only needs to know:
+Those extra jobs aren't necessary for the user to get an immediate success response. The user only needs to know:
 
 - Was the upload accepted?
 - Did the item save correctly?
 - Will the rest of the work continue?
 
-That is where background processing helps.
+That's where background processing helps.
 
 ### The beginner-friendly reason
 
@@ -66,11 +66,11 @@ That keeps your UI more responsive and keeps the web request focused on just the
 
 ### The architectural reason
 
-This is also your first real example of **decoupling**.
+This is also your first real example of **decoupling**. And I love this pattern.
 
-The Blazor app does not need to know **how** thumbnail generation works. It only needs to announce that a photo was uploaded.
+The Blazor app doesn't need to know **how** thumbnail generation works. It only needs to announce that a photo was uploaded.
 
-The worker does not need to know **who** uploaded the photo. It only needs to react to the event and do its job.
+The worker doesn't need to know **who** uploaded the photo. It only needs to react to the event and do its job.
 
 That separation gives you three benefits:
 
@@ -1191,6 +1191,8 @@ In the Aspire dashboard resources view, wait until both resources are running:
 
 - `mycollection`
 - `thumbnailworker`
+
+![Aspire dashboard showing both mycollection and thumbnailworker resources running](img/9-AspireDashboardWorkers.png)
 
 Do not rush to upload on the first second of startup.
 

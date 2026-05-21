@@ -2,7 +2,7 @@
 
 [← Previous Module](09-nservicebus.md) | [Back to README](../README.md)
 
-In this module, you will add a **second console application** to the `MyCollection` solution. This new project is another **NServiceBus endpoint**, and its job is different from the thumbnail worker you built in Module 9.
+In this module, you'll add a **second console application** to the `MyCollection` solution. This new project is another **NServiceBus endpoint**, and its job is different from the thumbnail worker you built in Module 9.
 
 The thumbnail worker was about image processing.
 This worker is about **image understanding**.
@@ -49,7 +49,7 @@ This module uses AI in a way that feels grounded:
 
 That matters.
 A lot of AI examples stop at printing text to a console.
-This one takes the next step and shows how AI becomes part of an actual feature.
+This one takes the next step and shows how AI becomes part of an actual feature. That's what I want you to take away from this module.
 
 ### Why background processing still matters
 
@@ -91,8 +91,8 @@ You established the feature goal clearly: AI is not a gimmick here. It saves tim
 For this module, you will use the **Microsoft Agent Framework building blocks in `Microsoft.Extensions.AI`**.
 
 That phrasing matters.
-You are not building a giant autonomous agent system.
-You are using the pieces of the framework that make model access clean, testable, and provider-neutral.
+You're not building a giant autonomous agent system.
+You're using the pieces of the framework that make model access clean, testable, and provider-neutral.
 
 ### The important abstraction: `IChatClient`
 
@@ -112,7 +112,7 @@ It gives your code one consistent surface for:
 - Sending multi-modal content such as text and images
 - Receiving model responses
 
-That means your application code does **not** need to be tightly coupled to one provider.
+That means your application code does **not** need to be tightly coupled to one provider. And that's exactly how I like to build things.
 
 ### Why that is useful in this workshop
 
@@ -124,9 +124,9 @@ Later, if you want to move to:
 - Azure OpenAI
 - Another OpenAI-compatible endpoint
 
-…you should not have to rewrite your handler logic.
+…you shouldn't have to rewrite your handler logic.
 
-That is the exact benefit of `Microsoft.Extensions.AI`.
+That's the exact benefit of `Microsoft.Extensions.AI`.
 You can keep the application logic centered on `IChatClient` and swap the underlying provider configuration.
 
 ### The provider-specific layer still exists
@@ -151,8 +151,8 @@ A beginner-friendly way to explain this is:
 - `ChatClientBuilder` lets you add middleware such as logging or telemetry
 - The worker becomes a small, focused AI-powered service
 
-That is enough for this workshop.
-You are teaching the right architectural shape without dragging students into unnecessary complexity.
+That's enough for this workshop.
+You're teaching the right architectural shape without dragging students into unnecessary complexity.
 
 ### What just happened
 
@@ -162,7 +162,7 @@ You separated the abstraction from the provider. The worker will depend on `ICha
 
 ## 3. Creating the AI Worker Console App
 
-**Expected outcome:** You create a new console project named `MyCollection.ImageAnalysisWorker`, add it to the solution, and install the packages it needs.
+**Expected outcome:** You create a new console project named `MyCollection.AiWorker`, add it to the solution, and install the packages it needs.
 
 This module adds a **second** console app.
 It is a separate NServiceBus endpoint, just like the thumbnail worker from Module 9.
@@ -170,8 +170,8 @@ It is a separate NServiceBus endpoint, just like the thumbnail worker from Modul
 From the solution root, run:
 
 ```bash
-dotnet new console -n MyCollection.ImageAnalysisWorker
-dotnet sln .\MyCollection.sln add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
+dotnet new console -n MyCollection.AiWorker
+dotnet sln .\MyCollection.sln add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
 ```
 
 ### Add project references
@@ -184,8 +184,8 @@ This worker should reference:
 Run:
 
 ```bash
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj reference .\MyCollection.ServiceDefaults\MyCollection.ServiceDefaults.csproj
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj reference .\MyCollection.Messages\MyCollection.Messages.csproj
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj reference .\MyCollection.ServiceDefaults\MyCollection.ServiceDefaults.csproj
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj reference .\MyCollection.Messages\MyCollection.Messages.csproj
 ```
 
 > If your shared contracts project from Module 9 has a different name, use that project instead. The important part is that both workers and the web app share the same message contract types.
@@ -195,12 +195,12 @@ dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.c
 Install the packages explicitly so the project file is easy to read:
 
 ```bash
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj package Microsoft.Extensions.AI --version 10.6.0
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj package Microsoft.Extensions.AI.OpenAI --version 10.6.0
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj package OpenAI --version 2.10.0
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj package NServiceBus --version 10.1.4
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj package NServiceBus.Extensions.Hosting --version 4.0.1
-dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj package Microsoft.Data.Sqlite --version 10.0.8
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj package Microsoft.Extensions.AI --version 10.6.0
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj package Microsoft.Extensions.AI.OpenAI --version 10.6.0
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj package OpenAI --version 2.10.0
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj package NServiceBus --version 10.1.4
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj package NServiceBus.Extensions.Hosting --version 4.0.1
+dotnet add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj package Microsoft.Data.Sqlite --version 10.0.8
 ```
 
 ### What each package is doing
@@ -216,7 +216,7 @@ dotnet add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.c
 
 Your new worker project should look like this:
 
-`MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj`
+`MyCollection.AiWorker\MyCollection.AiWorker.csproj`
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -245,10 +245,10 @@ Your new worker project should look like this:
 
 ### A note about naming
 
-The name `MyCollection.ImageAnalysisWorker` tells you exactly what the process does:
+The name `MyCollection.AiWorker` tells you exactly what the process does:
 
 - `MyCollection` ties it to the solution
-- `ImageAnalysis` describes the business job
+- `Ai` describes the business job — this worker handles AI tasks
 - `Worker` makes it obvious that this is a background process
 
 That kind of naming matters in multi-process systems.
@@ -298,10 +298,10 @@ That sentence is important because it preserves the workshop flow. The worker co
 
 Create a file named `AiOptions.cs`:
 
-`MyCollection.ImageAnalysisWorker\AiOptions.cs`
+`MyCollection.AiWorker\AiOptions.cs`
 
 ```csharp
-namespace MyCollection.ImageAnalysisWorker;
+namespace MyCollection.AiWorker;
 
 public sealed class AiOptions
 {
@@ -395,10 +395,10 @@ That keeps the worker easy to reason about:
 If you want to run the worker outside Aspire, you can use user secrets while developing:
 
 ```bash
-dotnet user-secrets init --project .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
-dotnet user-secrets set AI:Endpoint https://models.github.ai/inference --project .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
-dotnet user-secrets set AI:Model openai/gpt-4.1 --project .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
-dotnet user-secrets set AI:ApiKey YOUR_GITHUB_MODELS_TOKEN --project .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
+dotnet user-secrets init --project .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
+dotnet user-secrets set AI:Endpoint https://models.github.ai/inference --project .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
+dotnet user-secrets set AI:Model openai/gpt-4.1 --project .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
+dotnet user-secrets set AI:ApiKey YOUR_GITHUB_MODELS_TOKEN --project .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
 ```
 
 When running under Aspire, you will inject the same values from the AppHost instead.
@@ -492,10 +492,10 @@ You need four pieces:
 
 Create `ImageAnalysisResult.cs`:
 
-`MyCollection.ImageAnalysisWorker\ImageAnalysisResult.cs`
+`MyCollection.AiWorker\ImageAnalysisResult.cs`
 
 ```csharp
-namespace MyCollection.ImageAnalysisWorker;
+namespace MyCollection.AiWorker;
 
 public sealed record ImageAnalysisResult(string Description, string[] Tags);
 ```
@@ -507,14 +507,14 @@ That is all it needs to be.
 
 Create `ImageAnalysisService.cs`:
 
-`MyCollection.ImageAnalysisWorker\ImageAnalysisService.cs`
+`MyCollection.AiWorker\ImageAnalysisService.cs`
 
 ```csharp
 using System.Text.Json;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Logging;
 
-namespace MyCollection.ImageAnalysisWorker;
+namespace MyCollection.AiWorker;
 
 public sealed class ImageAnalysisService(
     IChatClient chatClient,
@@ -649,13 +649,13 @@ It is a realistic bit of defensive programming around AI output.
 
 Create `CollectionAnalysisStore.cs`:
 
-`MyCollection.ImageAnalysisWorker\CollectionAnalysisStore.cs`
+`MyCollection.AiWorker\CollectionAnalysisStore.cs`
 
 ```csharp
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 
-namespace MyCollection.ImageAnalysisWorker;
+namespace MyCollection.AiWorker;
 
 public sealed class CollectionAnalysisStore(IConfiguration configuration)
 {
@@ -710,14 +710,14 @@ That is an appropriate tradeoff for a single-purpose background endpoint.
 
 Create `AnalyzeCollectionImageHandler.cs`:
 
-`MyCollection.ImageAnalysisWorker\AnalyzeCollectionImageHandler.cs`
+`MyCollection.AiWorker\AnalyzeCollectionImageHandler.cs`
 
 ```csharp
 using Microsoft.Extensions.Logging;
 using MyCollection.Messages;
 using NServiceBus;
 
-namespace MyCollection.ImageAnalysisWorker;
+namespace MyCollection.AiWorker;
 
 public sealed class AnalyzeCollectionImageHandler(
     ImageAnalysisService imageAnalysisService,
@@ -764,7 +764,7 @@ That separation makes the code easier to test and easier to explain.
 
 Now replace the default console template with this full `Program.cs`:
 
-`MyCollection.ImageAnalysisWorker\Program.cs`
+`MyCollection.AiWorker\Program.cs`
 
 ```csharp
 using Azure;
@@ -776,7 +776,7 @@ using NServiceBus;
 using OpenAI;
 using OpenAI.Chat;
 
-namespace MyCollection.ImageAnalysisWorker;
+namespace MyCollection.AiWorker;
 
 public static class Program
 {
@@ -818,7 +818,7 @@ public static class Program
 
         builder.UseNServiceBus(_ =>
         {
-            var endpointConfiguration = new EndpointConfiguration("MyCollection.ImageAnalysisWorker");
+            var endpointConfiguration = new EndpointConfiguration("MyCollection.AiWorker");
 
             endpointConfiguration.UseSerialization<SystemJsonSerializer>();
 
@@ -981,13 +981,13 @@ Because this workshop already uses Aspire, the new worker should be added to the
 First, add the worker project to the solution if you have not already done so:
 
 ```bash
-dotnet sln .\MyCollection.sln add .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
+dotnet sln .\MyCollection.sln add .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
 ```
 
 Then make sure the AppHost references the new project:
 
 ```bash
-dotnet add .\MyCollection.AppHost\MyCollection.AppHost.csproj reference .\MyCollection.ImageAnalysisWorker\MyCollection.ImageAnalysisWorker.csproj
+dotnet add .\MyCollection.AppHost\MyCollection.AppHost.csproj reference .\MyCollection.AiWorker\MyCollection.AiWorker.csproj
 ```
 
 ### Update `MyCollection.AppHost\Program.cs`
@@ -1005,7 +1005,7 @@ builder.AddProject<Projects.MyCollection>("mycollection");
 
 builder.AddProject<Projects.MyCollection_ThumbnailWorker>("thumbnailworker");
 
-builder.AddProject<Projects.MyCollection_ImageAnalysisWorker>("imageanalysisworker")
+builder.AddProject<Projects.MyCollection_AiWorker>("aiworker")
     .WithEnvironment("AI__Endpoint", "https://models.github.ai/inference")
     .WithEnvironment("AI__Model", "openai/gpt-4.1")
     .WithEnvironment("AI__ApiKey", githubModelsToken)
@@ -1038,7 +1038,7 @@ If GitHub Models is unavailable, your instructor will provide an endpoint URL.
 In that case, update the AppHost environment values:
 
 ```csharp
-builder.AddProject<Projects.MyCollection_ImageAnalysisWorker>("imageanalysisworker")
+builder.AddProject<Projects.MyCollection_AiWorker>("aiworker")
     .WithEnvironment("AI__Endpoint", "https://your-instructor-endpoint.example.com")
     .WithEnvironment("AI__Model", "your-model-name")
     .WithEnvironment("AI__ApiKey", githubModelsToken)
@@ -1095,10 +1095,12 @@ You should see resources for at least:
 
 - `mycollection`
 - `thumbnailworker`
-- `imageanalysisworker`
+- `aiworker`
 
 The exact names depend on what you used in the AppHost.
 The important part is that all three resources start.
+
+![Aspire dashboard showing all three resources — mycollection, thumbnailworker, and aiworker](img/10-AspireDashboardAI.png)
 
 ### Step 3: Open the app and upload a photo
 
@@ -1129,8 +1131,8 @@ You might see log lines like these:
 ```text
 thumbnailworker: Created thumbnail for collection item 42
 thumbnailworker: Published AnalyzeCollectionImage for collection item 42
-imageanalysisworker: Analyzing collection item 42 using image C:\src\MyCollection\wwwroot\uploads\thumbnails\42.webp
-imageanalysisworker: Saved AI analysis for collection item 42
+aiworker: Analyzing collection item 42 using image C:\src\MyCollection\wwwroot\uploads\thumbnails\42.webp
+aiworker: Saved AI analysis for collection item 42
 ```
 
 The exact paths and wording will vary.

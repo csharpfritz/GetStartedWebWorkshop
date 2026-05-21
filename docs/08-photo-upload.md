@@ -2,7 +2,7 @@
 
 [← Previous Module](07-aspire.md) | [Back to README](../README.md)
 
-In this module, you will add photo upload to your `MyCollection` app. You already have full CRUD working with Entity Framework Core and SQLite from Module 6. Now you will extend the `CollectionItem` model with a photo field, build an upload form using Blazor's `InputFile` component, save images to the server, and display them as thumbnails in your collection list.
+In this module, you'll add photo upload to your `MyCollection` app. You already have full CRUD working with Entity Framework Core and SQLite from Module 6. Now we're going to extend the `CollectionItem` model with a photo field, build an upload form using Blazor's `InputFile` component, save images to the server, and display them as thumbnails in your collection list.
 
 By the end, each item can optionally have a photo that persists across app restarts — just like the other fields in the database.
 
@@ -16,7 +16,7 @@ Text descriptions are useful. A visual record makes a collection app genuinely u
 
 That is the practical motivation. There is also a technical one.
 
-Photo upload is one of the most common tasks in real-world web development. Nearly every app that lets users add content — profiles, product listings, portfolios — needs file upload at some point. Learning it now in a Blazor context means you have seen the pattern for real.
+Photo upload is one of the most common tasks in real-world web development. Nearly every app that lets users add content — profiles, product listings, portfolios — needs file upload at some point. Learning it now in a Blazor context means you've seen the pattern for real.
 
 ### What you will build
 
@@ -493,7 +493,11 @@ Then start the app:
 dotnet run
 ```
 
-Navigate to `/collection` and work through these test cases.
+Navigate to `/collection` and you should see the updated form with the photo file picker alongside the existing fields:
+
+![Collection page with photo upload form showing name, description, favorite checkbox, and file picker](img/8-PhotoUploadForm.png)
+
+Work through these test cases.
 
 ### Happy path
 
