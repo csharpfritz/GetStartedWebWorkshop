@@ -54,7 +54,38 @@ Checkpoint folders are located in the `checkpoints/` directory at the repository
 
 ## Sponsors
 
-This workshop is made possible with support from **Particular Software**, the makers of **NServiceBus**, the leading .NET service bus for building scalable, reliable distributed systems.
+This workshop is made possible with generous support from our sponsors:
+
+<table>
+  <tr>
+    <td align="center" width="200">
+      <a href="https://www.gapvelocity.ai"><img src="sponsors/gap-velocity.png" alt="GAP Velocity AI" width="160"></a>
+    </td>
+    <td align="center" width="200">
+      <a href="https://www.ironsoftware.com"><img src="sponsors/iron-software.png" alt="Iron Software" width="160"></a>
+    </td>
+    <td align="center" width="200">
+      <a href="https://www.packtpub.com/"><img src="sponsors/packt.svg" alt="Packt" width="160"></a>
+    </td>
+    <td align="center" width="200">
+      <a href="https://clearmeasure.com/"><img src="sponsors/clear-measure.svg" alt="Clear Measure" width="160"></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="200">
+      <a href="https://www.devart.com/"><img src="sponsors/devart.png" alt="Devart" width="160"></a>
+    </td>
+    <td align="center" width="200">
+      <a href="https://www.telerik.com"><img src="sponsors/progress-telerik.png" alt="Progress Telerik" width="160"></a>
+    </td>
+    <td align="center" width="200">
+      <a href="https://go.particular.net/webdev26"><img src="sponsors/particular.svg" alt="Particular Software" width="160"></a>
+    </td>
+    <td align="center" width="200">
+      <a href="https://developer.mescius.com"><img src="sponsors/mescius.svg" alt="MESCIUS" width="160"></a>
+    </td>
+  </tr>
+</table>
 
 ---
 
