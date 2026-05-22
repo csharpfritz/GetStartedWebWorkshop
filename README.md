@@ -68,7 +68,7 @@ This workshop is made possible with generous support from our sponsors:
       <a href="https://www.packtpub.com/"><img src="sponsors/packt.svg" alt="Packt" width="160"></a>
     </td>
     <td align="center" width="200">
-      <a href="https://clearmeasure.com/"><img src="sponsors/clear-measure.svg" alt="Clear Measure" width="160"></a>
+      <a href="https://clearmeasure.com/"><img src="sponsors/clear-measure.png" alt="Clear Measure" width="160"></a>
     </td>
   </tr>
   <tr>
