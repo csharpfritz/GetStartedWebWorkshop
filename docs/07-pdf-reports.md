@@ -39,7 +39,7 @@ Open a terminal in the `MyCollection` project directory and run:
 dotnet add package IronPdf
 ```
 
-This adds the IronPDF library to your Blazor Server project.
+This adds the IronPDF library to your Blazor Server project.  Get a 30-day trial license at https://ironpdf.com/#trial-license
 
 ---
 
