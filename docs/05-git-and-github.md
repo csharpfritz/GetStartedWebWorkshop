@@ -10,8 +10,6 @@ Git can feel strange at first because it adds new words like repository, stage, 
 
 ## 1. What Is Version Control?
 
-**Expected outcome:** You understand what version control does and why it helps with your `MyCollection` project.
-
 Version control is a system for tracking changes to your files over time. I like to think of it as a **save point in a game**. Each time you make a useful change, you can create a save point. If something breaks later, you can go back and see what changed. Git is also a little like a very smart **undo history** that lasts across days, weeks, and even across different computers.
 
 For your project, that means you can:
@@ -32,8 +30,6 @@ Git will track both of them together in one repository.
 ---
 
 ## 2. Installing and Configuring Git
-
-**Expected outcome:** Git is installed on your machine, and your name and email are configured.
 
 You may already have Git installed from your earlier VS Code setup. Let's check first.
 
@@ -75,7 +71,7 @@ git config --global --list
 
 ## 3. Initializing Your Repository
 
-**Expected outcome:** Your project folder is now a Git repository.
+Now let's turn your project folder into a real Git repository so Git can start tracking every meaningful change you make.
 
 Open a terminal in VS Code and move to the folder that contains **both** project folders:
 
@@ -103,8 +99,6 @@ After `git init`, your folder becomes a **repository**. A repository is just a p
 ---
 
 ## 4. Staging, Commits, and History
-
-**Expected outcome:** You can stage files, create your first commit, and view commit history.
 
 Git has a simple three-state model that is helpful to know:
 
@@ -168,8 +162,6 @@ That short ID on the left uniquely identifies the commit.
 
 ## 5. Creating a GitHub Repository
 
-**Expected outcome:** You have an empty GitHub repository ready to receive your local code.
-
 Now that your code is saved locally with Git, create a GitHub repository to publish it online.
 
 1. Go to [https://github.com/new](https://github.com/new)
@@ -195,8 +187,6 @@ https://github.com/your-account/MyCollection.git
 ---
 
 ## 6. Connecting Local to Remote
-
-**Expected outcome:** Your local repository is linked to GitHub, and your first commit is pushed.
 
 In Git terms, GitHub is your **remote** repository. Your computer is the **local** repository.
 
@@ -243,8 +233,6 @@ At that point, your code exists in two places: on your computer and on GitHub.
 ---
 
 ## 7. Basic Workflow: Edit -> Stage -> Commit -> Push
-
-**Expected outcome:** You can make a small change and send it to GitHub using the normal Git workflow.
 
 This is the cycle you will use over and over:
 
@@ -325,8 +313,6 @@ Use it every time you finish a small, meaningful piece of work.
 
 ## 8. Using a .gitignore File
 
-**Expected outcome:** Your repository ignores build output and user-specific files that should not be committed.
-
 A `.gitignore` file tells Git which files and folders it should leave alone.
 
 Ideally, you create `.gitignore` **before** your first commit. But if you already committed without it, that is okay. You can add it now.
@@ -362,8 +348,6 @@ If you accidentally committed ignored files before creating `.gitignore`, Git ma
 ---
 
 ## 9. Viewing History on GitHub
-
-**Expected outcome:** You can find your code, commits, and diffs in the GitHub website.
 
 Once your code is on GitHub, spend a minute learning the basic interface.
 
@@ -402,8 +386,6 @@ This is one of the most useful GitHub features because it helps you review exact
 ---
 
 ## 10. Branches
-
-**Expected outcome:** You know what a branch is and how to create one.
 
 A branch is a separate line of development.
 

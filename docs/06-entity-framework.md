@@ -8,8 +8,6 @@ In this module, we're going to replace your in-memory collection list with a rea
 
 ## 1. Why We Need a Database
 
-**Expected outcome:** You understand why the current in-memory list is not enough and why SQLite is a good first database.
-
 Right now, your `MyCollection` page stores items in a normal C# list. That works for learning, but it has one big problem: **the list only lives in memory while the app is running**.
 
 That means:
@@ -34,8 +32,6 @@ By the end of this module, your `MyCollection` app will save collection items to
 ---
 
 ## 2. What Is Dependency Injection (DI)?
-
-**Expected outcome:** You understand the basic DI pattern: register services in `Program.cs`, then request them where you need them.
 
 This module is your first real introduction to **dependency injection**, often shortened to **DI**.
 
@@ -118,8 +114,6 @@ Keep this mental model in mind for later modules. DI is a major building block i
 
 ## 3. Adding NuGet Packages
 
-**Expected outcome:** Your `MyCollection` project references the EF Core packages it needs.
-
 In Module 4, you used `dotnet add reference` to connect one project you own to another project you own.
 
 ```bash
@@ -153,8 +147,6 @@ Both commands add something your project can use, but they come from different p
 ---
 
 ## 4. Creating a DbContext
-
-**Expected outcome:** You have a `CollectionContext` class in the main `MyCollection` app project, and your model has a primary key EF Core can use.
 
 Before creating the database context, update `CollectionItem` so EF Core has a primary key. By convention, a property named `Id` becomes the key column for the table.
 
@@ -212,8 +204,6 @@ One important decision for this workshop: `CollectionContext` belongs in the mai
 ---
 
 ## 5. Registering the DbContext with DI
-
-**Expected outcome:** `CollectionContext` is registered in `Program.cs` using `builder.Services.AddDbContext<>()`.
 
 Now connect the DI idea from Section 2 to the database context you just created.
 
@@ -275,8 +265,6 @@ This is the approach you should use in this workshop. Do **not** put SQLite conf
 
 ## 6. Migrations
 
-**Expected outcome:** You create the database schema from your C# model and understand what migration files are for.
-
 EF Core uses **migrations** to keep your database schema in sync with your code.
 
 A migration is a version-controlled description of a database change. For example:
@@ -327,8 +315,6 @@ The long number at the start is a timestamp, so your filename will be different.
 ---
 
 ## 7. Updating the Blazor Page - Read (the R in CRUD)
-
-**Expected outcome:** Your `/collection` page loads items from SQLite by injecting `CollectionContext` and calling `ToListAsync()` in `OnInitializedAsync()`.
 
 **CRUD** stands for:
 
@@ -562,8 +548,6 @@ That is the moment when your app stops depending on a hardcoded list and starts 
 
 ## 8. Create - Adding New Items
 
-**Expected outcome:** You can insert a new `CollectionItem` into the database and save it with EF Core.
-
 To create a new row, you build a `CollectionItem`, add it to the `DbSet`, and then call `SaveChangesAsync()`.
 
 The key code is:
@@ -600,8 +584,6 @@ This is the **C** in CRUD.
 ---
 
 ## 9. Update - Editing Items
-
-**Expected outcome:** You can load one item, change its values, and save the changes back to the database.
 
 Updating usually happens in two steps:
 
@@ -667,8 +649,6 @@ This is the **U** in CRUD.
 
 ## 10. Delete - Removing Items
 
-**Expected outcome:** You can remove an item from the database with a delete button.
-
 Deleting is straightforward: find the item, remove it from the `DbSet`, then save.
 
 ```csharp
@@ -715,8 +695,6 @@ Run the app and navigate to `/collection`. Your page should look something like 
 
 ## 11. Updating `.gitignore`
 
-**Expected outcome:** Git ignores generated SQLite database files, but still tracks your migration source code.
-
 Module 5 taught you that not every file belongs in Git.
 
 Your SQLite database file is **generated output**, not source code. Students on different machines will each create their own local database file. That means the `.db` file should be ignored.
@@ -741,8 +719,6 @@ That reinforces a good habit from Module 5: commit the files that describe how y
 ---
 
 ## 12. Viewing Your Database
-
-**Expected outcome:** You know where the SQLite file lives and how to inspect it if you are curious.
 
 After `dotnet ef database update`, you will have a file named `MyCollection.db` in your `MyCollection` project folder.
 

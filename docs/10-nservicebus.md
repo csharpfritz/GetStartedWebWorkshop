@@ -27,8 +27,6 @@ By the end of this module, your solution will include:
 
 ## 1. Why Background Processing?
 
-**Expected outcome:** You understand why the photo upload flow now needs a background worker instead of doing all image processing inside the request.
-
 Right now, the photo upload flow from Module 9 is simple and direct:
 
 1. The user selects a photo
@@ -114,8 +112,6 @@ Further reading: [https://docs.particular.net/nservicebus/](https://docs.particu
 ---
 
 ## 2. NServiceBus Fundamentals
-
-**Expected outcome:** You understand the small set of NServiceBus concepts needed for this module: endpoint, message, handler, and transport.
 
 NServiceBus is a framework for building **message-driven .NET applications**.
 
@@ -244,8 +240,6 @@ Further reading:
 ---
 
 ## 3. Creating the Worker Console App
-
-**Expected outcome:** You have a new console application named `MyCollection.ThumbnailWorker` that starts as an NServiceBus endpoint and can be launched by the .NET Generic Host.
 
 The worker is a plain **console application**. That matters because you do not need a second web app here. You just need a process that stays alive, listens for NServiceBus messages, and runs handlers.
 
@@ -401,8 +395,6 @@ You created the host process that will do the background work. The worker still 
 
 ## 4. Defining the Message
 
-**Expected outcome:** You have a shared class library named `MyCollection.Messages` that contains a `ProcessPhotoUploaded` event contract used by both the web app and the worker.
-
 A message contract has to be shared.
 
 If the web app and the worker each define their own local copy of `ProcessPhotoUploaded`, you now have two types with the same name but different identities. That causes confusion fast.
@@ -509,8 +501,6 @@ You created the shared language both endpoints will speak. That is the contract-
 ---
 
 ## 5. Writing the Image Handler
-
-**Expected outcome:** The worker contains an NServiceBus handler that receives `ProcessPhotoUploaded`, resizes the original image, and saves a WebP thumbnail.
 
 This section is the heart of the module.
 
@@ -737,8 +727,6 @@ You finished the actual background-processing logic. From this point on, the mis
 ---
 
 ## 6. Publishing from the Blazor App
-
-**Expected outcome:** The `MyCollection` app is configured as an NServiceBus endpoint, and the upload flow publishes `ProcessPhotoUploaded` after a photo is saved.
 
 The web app already knows how to save the original photo. That part stays.
 
@@ -993,8 +981,6 @@ You turned the upload page into a **publisher**. It still owns the original user
 
 ## 7. Wiring into Aspire AppHost
 
-**Expected outcome:** Aspire starts both the Blazor app and the thumbnail worker, and the shared telemetry configuration includes NServiceBus traces.
-
 You already added Aspire in the previous module. That means the AppHost exists, `ServiceDefaults` exists, and `aspire run` is already your standard launch flow.
 
 Now you will teach Aspire about the new worker.
@@ -1146,8 +1132,6 @@ You connected the new background worker to the orchestration layer you already b
 
 ## 8. Running and Testing
 
-**Expected outcome:** You can start the solution with `aspire run`, upload a photo, and verify that a generated WebP thumbnail appears after the background worker finishes.
-
 Now it is time to watch the whole flow work together.
 
 ### Step 1: Build the solution
@@ -1291,8 +1275,6 @@ That is real background processing, not just a theory diagram.
 ---
 
 ## 9. Monitoring in the Aspire Dashboard
-
-**Expected outcome:** You can use the Aspire dashboard to observe the web request, the published NServiceBus event, and the worker's message handling activity.
 
 This section is where Aspire and NServiceBus finally meet in a visible way.
 

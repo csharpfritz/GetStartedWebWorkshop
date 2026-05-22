@@ -10,8 +10,6 @@ By the end, each item can optionally have a photo that persists across app resta
 
 ## 1. Why Photos Matter for Your Collection
 
-**Expected outcome:** You understand why adding photos improves the collection app and what this module will build.
-
 Text descriptions are useful. A visual record makes a collection app genuinely useful. Instead of scrolling through a list of names and notes, you can see what each item actually looks like at a glance.
 
 That is the practical motivation. There is also a technical one.
@@ -36,8 +34,6 @@ Module 10 (NServiceBus) will build on exactly what you create here. One of the t
 ---
 
 ## 2. Adding PhotoFileName to the CollectionItem Model
-
-**Expected outcome:** The `CollectionItem` class has a new `PhotoFileName` nullable string property.
 
 You are storing a file **name**, not the file itself. The image file will live on disk in `wwwroot/uploads/`, and the database will store just the filename so you can build a URL to display it.
 
@@ -81,8 +77,6 @@ You will not run the EF Core migration yet. Write the application code in sectio
 ---
 
 ## 3. Building the File Upload Component in Blazor
-
-**Expected outcome:** Your `Collection.razor` page has an `InputFile` control in the add-item form and a C# event handler that captures the selected file.
 
 Blazor provides a built-in component called `InputFile`. It wraps the HTML `<input type="file">` element and gives you a typed C# object to work with instead of raw browser events.
 
@@ -128,7 +122,7 @@ private void OnNewFileSelected(InputFileChangeEventArgs e)
 
 ## 4. Handling Uploaded Files on the Server
 
-**Expected outcome:** You have a `SavePhotoAsync` method that accepts an `IBrowserFile`, saves it to `wwwroot/uploads/` with a unique filename, and returns the filename string for storage in the database.
+This is where the upload stops being a browser concept and becomes a real file on disk. We'll save the image into `wwwroot/uploads/` and keep just the filename in the database.
 
 ### Injecting IWebHostEnvironment
 
@@ -243,8 +237,6 @@ The file is on disk. The filename is in the database. The two are linked only by
 
 ## 5. Displaying Uploaded Photos in the UI
 
-**Expected outcome:** The collection list shows a thumbnail for items that have a photo, and a consistent placeholder for items that do not.
-
 Serving images from `wwwroot` is built into ASP.NET Core. The static files middleware handles any file under `wwwroot` automatically — no routing or controller code is needed. A file saved at `wwwroot/uploads/abc123.jpg` is available at the URL `/uploads/abc123.jpg`.
 
 ### Adding the photo display to the item list
@@ -296,8 +288,6 @@ Four details worth noting:
 ---
 
 ## 6. Updating the Database Schema for Photo Metadata
-
-**Expected outcome:** You have run an EF Core migration that adds a nullable `PhotoFileName` column to the `CollectionItems` table, and the app runs successfully.
 
 The model has a new property. EF Core needs a migration to reflect that change in the database.
 
@@ -363,8 +353,6 @@ The `!` line is an exception rule that tells Git to still track `.gitkeep` even 
 ---
 
 ## 7. Basic File Validation
-
-**Expected outcome:** Your upload code rejects files larger than 5 MB and files that are not images, and shows a clear error message in both cases.
 
 File validation happens in two layers:
 
@@ -442,8 +430,6 @@ For this workshop, content type validation is appropriate. It stops accidents an
 
 ## 8. Taking Photos Directly with a Device Camera
 
-**Expected outcome:** You understand the HTML5 `capture` attribute and know how to apply it to `InputFile` if you want mobile users to go directly to the camera.
-
 On a mobile device, `<input type="file" accept="image/*">` typically gives the user a choice: browse their photo gallery or open the camera. The HTML5 `capture` attribute takes that further by going directly to the camera:
 
 ```html
@@ -478,8 +464,6 @@ For this workshop, leaving `capture` off (as in sections 3 and 4) is the better 
 ---
 
 ## 9. Testing the Upload Flow End-to-End
-
-**Expected outcome:** You can add an item with a photo, see the thumbnail in the list, and verify the data survives an app restart.
 
 Before testing, confirm the migration has been applied:
 
@@ -539,8 +523,6 @@ If you want to inspect the database record at the same time, open `MyCollection.
 ---
 
 ## 10. Committing Your Changes to Git
-
-**Expected outcome:** Your photo upload additions are committed to your repository with a descriptive commit message.
 
 Module 5 taught you the Git workflow. This module has added several meaningful files and changes, so take a moment to review before staging everything.
 

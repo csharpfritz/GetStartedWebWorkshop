@@ -25,8 +25,6 @@ This is a good beginner-scale AI feature because it is practical, visible, and e
 
 ## 1. Why AI for Collections?
 
-**Expected outcome:** You understand why image analysis is a strong fit for `MyCollection` and what value it adds to the app.
-
 A collection app gets more useful when it helps the user organize what they uploaded.
 
 That is exactly what AI can do here.
@@ -85,8 +83,6 @@ You established the feature goal clearly: AI is not a gimmick here. It saves tim
 ---
 
 ## 2. Microsoft Agent Framework Overview
-
-**Expected outcome:** You understand what `Microsoft.Extensions.AI` gives you and why it is a good abstraction for this worker.
 
 For this module, you will use the **Microsoft Agent Framework building blocks in `Microsoft.Extensions.AI`**.
 
@@ -161,8 +157,6 @@ You separated the abstraction from the provider. The worker will depend on `ICha
 ---
 
 ## 3. Creating the AI Worker Console App
-
-**Expected outcome:** You create a new console project named `MyCollection.AiWorker`, add it to the solution, and install the packages it needs.
 
 This module adds a **second** console app.
 It is a separate NServiceBus endpoint, just like the thumbnail worker from Module 10.
@@ -261,8 +255,6 @@ You created a second background endpoint and gave it the packages needed to talk
 ---
 
 ## 4. Configuring the AI Client
-
-**Expected outcome:** The worker can read model settings from configuration and connect to GitHub Models first, with a clean fallback path for an instructor-provided endpoint.
 
 This module starts with **GitHub Models** because it is the easiest workshop-friendly endpoint.
 
@@ -411,8 +403,6 @@ You designed the AI connection so the code depends on abstractions and the envir
 
 ## 5. Defining the Message
 
-**Expected outcome:** You create a shared event named `AnalyzeCollectionImage` that the thumbnail worker can publish and the AI worker can subscribe to.
-
 In Module 10, the first worker created a thumbnail and converted the uploaded image.
 Now you need a message that represents the next step in the pipeline.
 
@@ -477,8 +467,6 @@ You turned the AI analysis step into a proper message-driven contract. That keep
 ---
 
 ## 6. Writing the AI Handler
-
-**Expected outcome:** The AI worker can receive `AnalyzeCollectionImage`, load the image, ask the model to describe it, and store the result back in SQLite.
 
 This is the core of the module.
 You need four pieces:
@@ -872,8 +860,6 @@ You built the real heart of the module: a background endpoint that can receive a
 
 ## 7. Publishing from the Thumbnail Worker
 
-**Expected outcome:** The Module 10 worker publishes `AnalyzeCollectionImage` after it finishes creating the thumbnail.
-
 The AI worker will not do anything unless someone publishes the event it subscribes to.
 That publisher is your thumbnail worker from Module 10.
 
@@ -972,8 +958,6 @@ You extended the background pipeline instead of replacing it. The thumbnail work
 
 ## 8. Wiring into the Aspire AppHost
 
-**Expected outcome:** Aspire starts the web app, the thumbnail worker, and the AI worker together, and passes the AI configuration into the worker.
-
 Because this workshop already uses Aspire, the new worker should be added to the AppHost like any other project resource.
 
 ### Update the AppHost project references
@@ -1068,8 +1052,6 @@ You turned the AI worker into a first-class resource in the local architecture. 
 ---
 
 ## 9. Running End-to-End
-
-**Expected outcome:** You can run the solution, upload an image, and watch the full pipeline move from upload to thumbnail to AI analysis.
 
 Now it is time to run the whole thing.
 
@@ -1166,8 +1148,6 @@ You exercised the full multi-step workflow: upload, background image processing,
 ---
 
 ## 10. Viewing Results in the Blazor UI
-
-**Expected outcome:** The generated description and tags are stored on the collection item and displayed in the app.
 
 The AI worker is only valuable if users can see the result.
 That means the Blazor app needs somewhere to store and render the generated output.

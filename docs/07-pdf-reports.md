@@ -18,8 +18,6 @@ By the end of this module, your app will include:
 
 ## 1. Why Generate PDFs from Blazor?
 
-**Expected outcome:** You understand why rendering a Blazor page as a PDF is a practical approach for report generation.
-
 Many apps need to produce reports, invoices, or summaries as PDF files. Traditionally this meant using a separate PDF layout engine and duplicating your UI logic. With IronPDF, you can reuse your existing Blazor pages and CSS — design the report in HTML, preview it in the browser, and render it to PDF with a few lines of code.
 
 IronPDF uses a **Chrome-based rendering engine** internally, so the PDF output matches exactly what you see in the browser. This means:
@@ -33,7 +31,7 @@ IronPDF uses a **Chrome-based rendering engine** internally, so the PDF output m
 
 ## 2. Install the IronPDF NuGet Package
 
-**Expected outcome:** Your Blazor project references IronPDF.
+Let's get IronPDF into the project so the rest of this module has something real to build on.
 
 Open a terminal in the `MyCollection` project directory and run:
 
@@ -47,7 +45,7 @@ This adds the IronPDF library to your Blazor Server project.
 
 ## 3. Create the Report Page
 
-**Expected outcome:** A new Blazor page displays all collection items in a styled grid suitable for PDF rendering.
+Now let's create the page that will become the report. I like starting here because once the HTML looks right in the browser, the PDF part gets much easier.
 
 Create a new file at `Components/Pages/Report.razor`:
 
@@ -128,7 +126,7 @@ Create a new file at `Components/Pages/Report.razor`:
 
 ## 4. Style the Report Page
 
-**Expected outcome:** The report page has clean, print-friendly CSS styling.
+A report should look intentional on paper, not like a random web page snapshot. Let's add some print-friendly styling next.
 
 Add the following scoped CSS file at `Components/Pages/Report.razor.css`:
 
@@ -188,7 +186,7 @@ Add the following scoped CSS file at `Components/Pages/Report.razor.css`:
 
 ## 5. Add the PDF Export Endpoint
 
-**Expected outcome:** A controller endpoint uses IronPDF to render the report page as a PDF and return it as a file download.
+Now let's connect that page to IronPDF. This endpoint will render the report and stream it back as a file download.
 
 Create a new file at `Controllers/ReportController.cs`:
 
@@ -227,7 +225,7 @@ public class ReportController : ControllerBase
 
 ## 6. Add a Download Button
 
-**Expected outcome:** Users can click a button on the report page to download the PDF.
+With the endpoint in place, the user experience gets a lot simpler. Let's add a download link right on the report page.
 
 Update the `Report.razor` page to include a download link. Add the following just below the closing `</div>` of `report-summary`:
 
@@ -267,7 +265,7 @@ And add this to your `Report.razor.css`:
 
 ## 7. Register the Controller in Program.cs
 
-**Expected outcome:** The API controller is discoverable by the ASP.NET Core routing system.
+One easy detail to miss here is that the controller has to be part of the ASP.NET Core pipeline. Let's wire that up before we test.
 
 In your `Program.cs`, ensure controllers are registered. Add these lines if they are not already present:
 
@@ -285,7 +283,7 @@ app.MapControllers();
 
 ## 8. Test the Report
 
-**Expected outcome:** You can view the report page in a browser and download it as a PDF.
+Now let's run the app and make sure both versions work: the HTML page in the browser and the PDF download. Pretty cool, right?
 
 1. Run your application with `dotnet watch`
 2. Navigate to `https://localhost:7018/report`

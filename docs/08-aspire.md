@@ -5,7 +5,7 @@ Even though `MyCollection` is still a single Blazor app, this is the right time 
 By the end of this module, you'll install the Aspire CLI, run `aspire init` in the solution root, review the generated `MyCollection.AppHost` and `MyCollection.ServiceDefaults` projects, wire your app into the AppHost, and run everything with `aspire run`.
 ---
 ## 1. What Is Aspire?
-**Expected outcome:** You understand what Aspire does and why it is useful even when your solution has only one app project.
+
 Aspire is a **development-time orchestration and observability stack** for distributed applications. That sentence sounds bigger than your app right now, so let's make it concrete.
 In this workshop, Aspire gives you three immediate benefits:
 1. A **single way to start the system**
@@ -44,7 +44,7 @@ You reframed Aspire from "advanced distributed systems tooling" into something p
 Further reading: [https://aspire.dev/get-started/app-host/](https://aspire.dev/get-started/app-host/)
 ---
 ## 2. Installing the Aspire CLI
-**Expected outcome:** The Aspire CLI is installed on your machine, and `aspire --version` reports a 13.x version.
+
 Older .NET Aspire tutorials often start with this command:
 ```bash
 dotnet workload install aspire
@@ -82,7 +82,9 @@ You installed the current Aspire tooling in the supported way. From this point f
 Further reading: [https://aspire.dev/get-started/install-cli/](https://aspire.dev/get-started/install-cli/)
 ---
 ## 3. Adding Aspire to the Existing `MyCollection` Solution
-**Expected outcome:** Running `aspire init` in the solution root creates a project-based AppHost and a `ServiceDefaults` project, then updates the solution.
+
+Now let's let Aspire create the plumbing around your existing solution. You do not need to build these projects by hand.
+
 Move to the repository root. This should be the folder that contains `MyCollection.sln`.
 Run:
 ```bash
@@ -126,7 +128,7 @@ You used one command, `aspire init`, to establish the full Aspire structure for 
 Further reading: [https://aspire.dev/get-started/add-aspire-existing-app/](https://aspire.dev/get-started/add-aspire-existing-app/)
 ---
 ## 4. Understanding the AppHost Project
-**Expected outcome:** You understand what the AppHost is, what its project file looks like, and how it registers `MyCollection` as a resource.
+
 The AppHost is the **orchestration layer**. It does not replace your app. It **starts** your app, keeps track of it as a resource, and coordinates the dashboard and environment wiring around it.
 Think of the AppHost as the conductor.
 `MyCollection` is still the application doing the real work.
@@ -194,7 +196,7 @@ You saw that the AppHost is small on purpose. Its job is to describe the resourc
 Further reading: [https://aspire.dev/get-started/app-host/](https://aspire.dev/get-started/app-host/)
 ---
 ## 5. Understanding `ServiceDefaults`
-**Expected outcome:** You understand what the generated `MyCollection.ServiceDefaults` project provides and why application projects reference it.
+
 If the AppHost is the conductor, `ServiceDefaults` is the **shared setup library**. It gives all of your C# services the same baseline behavior for:
 - OpenTelemetry logging, traces, and metrics
 - Health checks
@@ -337,7 +339,7 @@ You saw that `ServiceDefaults` is not mystery magic. It is a normal C# class lib
 Further reading: [https://aspire.dev/get-started/csharp-service-defaults/](https://aspire.dev/get-started/csharp-service-defaults/)
 ---
 ## 6. Wiring `MyCollection` into `ServiceDefaults`
-**Expected outcome:** `MyCollection` references the `MyCollection.ServiceDefaults` project and calls the generated extension methods in `Program.cs`.
+
 `aspire init` creates the `ServiceDefaults` project.
 Depending on the exact CLI flow and project detection, it may also update your app project automatically. Either way, you should verify that `MyCollection` references `MyCollection.ServiceDefaults` and uses the two generated extension methods.
 ### If the project reference is missing
@@ -394,7 +396,7 @@ You connected the main app to the shared Aspire defaults without changing the ap
 `MyCollection` still works the same way, but now it is ready to participate in the Aspire dashboard.
 ---
 ## 7. Running the App with `aspire run`
-**Expected outcome:** You can start the solution through the Aspire CLI and open the dashboard URL it prints in the terminal.
+
 This is another place where the modern workflow differs from the old one. Do **not** run the AppHost with a `dotnet run --project ...` command for this module.
 Use the Aspire CLI:
 ```bash
@@ -440,7 +442,7 @@ You started the entire local orchestration flow through the Aspire CLI. That one
 Further reading: [https://aspire.dev/get-started/first-app/](https://aspire.dev/get-started/first-app/)
 ---
 ## 8. Adding a Dev Tunnel for Phone Access
-**Expected outcome:** Your Aspire-hosted app can be reached through a public URL so you can open it on your phone during the workshop.
+
 Photo upload works best when you can test it from a real phone browser. A **dev tunnel** gives your local development server a public internet URL that securely forwards traffic back to your machine.
 That matters in this workshop because phone cameras are part of the story. If your app is only available on `localhost`, your phone can't reach it. Once the app has a dev tunnel URL, you can open the site on your phone, use the camera, and upload photos directly into your local app.
 ### Step 1: Add the DevTunnels package to the AppHost
@@ -481,7 +483,7 @@ You should be able to reach your locally running `MyCollection` app from both de
 You added a dev tunnel directly in the Aspire AppHost using `builder.AddDevTunnel()`. No manual CLI tunnel management needed — Aspire handles it for you. That gives the next module a clean on-ramp: when you add photo capture and upload, attendees can open the app on their phones instead of being stuck on `localhost`.
 ---
 ## 9. Exploring the Aspire Dashboard
-**Expected outcome:** You can use the dashboard to inspect resources, structured logs, traces, and metrics for `MyCollection`.
+
 The dashboard is where Aspire becomes immediately useful. It gives you a live view into what your application is doing while it runs.
 If you have only used `Console.WriteLine` before, this will feel like a big upgrade.
 ### Start by generating some activity
@@ -546,7 +548,7 @@ That workflow will make much more sense than trying to stare at the whole dashbo
 You learned how Aspire helps you move from "the app is probably running" to "I can see what the app is doing." That is the real value of observability.
 ---
 ## 10. SQLite and Aspire Resources
-**Expected outcome:** You understand why SQLite stays outside the AppHost resource model in this workshop, and how that differs from server-based integrations.
+
 Your app currently uses SQLite. That is a **local file-based database**. Because of that, you do **not** need to register it as an Aspire resource.
 That is an important point. Aspire resources are most useful when Aspire needs to help orchestrate a service, container, server process, or external dependency with a real lifecycle. SQLite does not work that way here. It is just a file on disk that EF Core opens when needed.
 So for this workshop, keep the database setup exactly as it already is:
@@ -595,7 +597,7 @@ The goal of this module is observability and orchestration, not infrastructure r
 You learned an important boundary: Aspire is great for orchestrating services and integrations, but not every local dependency needs to become an Aspire resource.
 ---
 ## 11. Reviewing the Generated Solution Structure
-**Expected outcome:** You can explain what each new Aspire file and folder is for.
+
 After `aspire init`, your solution has a few new moving parts. Here is the structure again with roles attached.
 ```text
 MyCollection.sln
@@ -633,7 +635,7 @@ That separation will make the whole solution easier to understand as the worksho
 You moved beyond the command line steps and mapped the Aspire files onto real roles in the solution. That makes the new project structure much less mysterious.
 ---
 ## 12. Committing Your Aspire Changes
-**Expected outcome:** You review the generated changes, stage them, and commit them using the Git workflow from Module 5.
+
 Once `aspire init` has created the projects and you have verified the wiring, commit the work. This is a good place to reinforce the Git habits from Module 5.
 ### Step 1: Review what changed
 From the solution root, run:
@@ -678,7 +680,7 @@ That makes later troubleshooting easier. If something breaks in a future module,
 You treated infrastructure work with the same discipline as feature work. That is exactly the right habit to build.
 ---
 ## 13. The New Aspire Workflow vs. the Old One
-**Expected outcome:** You can recognize outdated Aspire instructions and translate them into the current CLI-based flow.
+
 Because there is still a lot of older Aspire content online, it is worth ending the module with a direct comparison.
 | Older guidance | Current guidance |
 |---|---|

@@ -10,8 +10,6 @@ Today, our page will be **static**. That means it'll show content, but it won't 
 
 ## 1. Understand what HTML does
 
-**Expected outcome:** You can explain what HTML is and what the browser does with it.
-
 HTML stands for **HyperText Markup Language**.
 
 - **HyperText** means content can link to other content.
@@ -49,8 +47,6 @@ You should understand that:
 
 ## 2. Start with a complete HTML document
 
-**Expected outcome:** You can create a valid HTML file with the basic structure every page needs.
-
 Every HTML page starts with a few important parts:
 
 ```html
@@ -86,8 +82,6 @@ When this file opens in a browser:
 
 ## 3. Add visible page content
 
-**Expected outcome:** You can use headings and paragraphs to give your page a clear purpose.
-
 Now let's add content inside the `<body>`:
 
 ```html
@@ -122,8 +116,6 @@ You should see:
 - A page that clearly introduces the workshop app
 
 ## 4. Organize information with lists, links, and images
-
-**Expected outcome:** You can add common elements people use on everyday web pages.
 
 Our collection app needs to show useful information. Let's add a short list of features, a helpful link, and a sample image.
 
@@ -182,8 +174,6 @@ You should see:
 - A sample image placeholder
 
 ## 5. Build a semantic layout for the collection page
-
-**Expected outcome:** You can create a page layout with HTML elements that describe the purpose of each section.
 
 As pages grow, structure matters more. Instead of putting everything directly in `<body>`, we can use **semantic HTML**. Semantic elements describe what each part of the page means.
 
@@ -453,8 +443,6 @@ Here's the complete version of the collection page that matches this module's ch
 
 ## 6. A first look at CSS
 
-**Expected outcome:** You can explain the difference between HTML structure and CSS styling.
-
 HTML gives your page structure and meaning. CSS stands for **Cascading Style Sheets**, and it controls how that structure looks on the screen. In simple terms, HTML says "this is a heading" or "this is a list," while CSS says "make the heading blue" or "add space around this section."
 
 You don't need to learn all of CSS today. For now, think of it as the presentation layer for your page. A small amount of CSS can make the same HTML easier to read and feel more polished without changing the page's content.
@@ -702,8 +690,6 @@ Notice the CSS class names start with a dot (`.card`, `.highlight`), but when yo
 
 ## 7. Work with forms and input elements
 
-**Expected outcome:** You understand how HTML forms collect input and how buttons, labels, and inputs work together.
-
 A `<form>` groups input elements so the browser knows they belong together. Forms are commonly used when a page needs to collect information and submit it somewhere.
 
 Inside a form, you can use different kinds of inputs depending on the data you want:
@@ -765,8 +751,6 @@ You should see a simple form with:
 *The form section in the checkpoint page, showing the labeled fields learners add in Module 2 before the app becomes interactive.*
 
 ## 8. Connect the HTML file to the browser and the future Blazor app
-
-**Expected outcome:** You understand how the code in the file maps to what appears in the browser.
 
 Here's the big idea:
 
