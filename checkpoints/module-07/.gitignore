@@ -484,8 +484,3 @@ $RECYCLE.BIN/
 # SQLite database files
 *.db
 
-
-# Uploaded photos - not source code
-MyCollection/wwwroot/uploads/*
-!MyCollection/wwwroot/uploads/.gitkeep
-

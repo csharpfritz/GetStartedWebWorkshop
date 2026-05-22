@@ -23,12 +23,6 @@ namespace MyCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AiDescription")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AiTags")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("TEXT");
 

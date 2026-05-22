@@ -4,11 +4,11 @@ using MyCollection.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
-
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CollectionContext>(options =>
     options.UseSqlite("Data Source=MyCollection.db"));
@@ -33,9 +33,8 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
-app.MapDefaultEndpoints();
 
 app.Run();

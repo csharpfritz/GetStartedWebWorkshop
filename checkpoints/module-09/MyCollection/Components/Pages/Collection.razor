@@ -3,17 +3,14 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.EntityFrameworkCore
 @using MyCollection.Data
-@using MyCollection.Messages
 @using MyCollection.Models
-@using NServiceBus
 @inject CollectionContext Context
 @inject IWebHostEnvironment Env
-@inject IMessageSession MessageSession
 
 <PageTitle>My Collection</PageTitle>
 
 <h1>My Collection</h1>
-<p>Your items now include optional photos and background thumbnail processing.</p>
+<p>Your items now include optional photos stored in the <code>wwwroot/uploads</code> folder.</p>
 
 <h2 class="h4 mt-4">Add a new item</h2>
 <div class="row g-3 align-items-end">
@@ -88,8 +85,8 @@ else
                 <div>
                     @if (item.PhotoFileName is not null)
                     {
-                        <img src="@GetDisplayPhotoUrl(item)"
-                             alt="@($"{item.Name} photo")"
+                        <img src="/uploads/@item.PhotoFileName"
+                             alt="@item.Name"
                              class="img-thumbnail"
                              style="width: 80px; height: 80px; object-fit: cover;" />
                     }
@@ -197,71 +194,25 @@ else
             return;
         }
 
-        string? savedFileName = null;
-
         if (selectedFile is not null)
         {
-            savedFileName = await SavePhotoAsync(selectedFile);
-            if (savedFileName is null)
+            var fileName = await SavePhotoAsync(selectedFile);
+            if (fileName is null)
             {
                 return;
             }
 
-            newItem.PhotoFileName = savedFileName;
+            newItem.PhotoFileName = fileName;
         }
 
         newItem.DateAdded = DateTime.Today;
         Context.CollectionItems.Add(newItem);
         await Context.SaveChangesAsync();
 
-        if (savedFileName is not null)
-        {
-            await PublishPhotoUploadedEventAsync(newItem.Id, savedFileName);
-            statusMessage = $"Added: {newItem.Name}. Thumbnail processing started in the background.";
-        }
-        else
-        {
-            statusMessage = $"Added: {newItem.Name}";
-        }
-
+        statusMessage = $"Added: {newItem.Name}";
         newItem = new CollectionItem { DateAdded = DateTime.Today };
         selectedFile = null;
         await LoadItemsAsync();
-    }
-
-    private async Task PublishPhotoUploadedEventAsync(int itemId, string photoFileName)
-    {
-        var sourcePath = Path.Combine(Env.WebRootPath, "uploads", photoFileName);
-        var thumbnailFileName = $"{Path.GetFileNameWithoutExtension(photoFileName)}.webp";
-        var thumbnailPath = Path.Combine(Env.WebRootPath, "uploads", "thumbnails", thumbnailFileName);
-
-        var options = new PublishOptions();
-        options.ContinueExistingTraceOnReceive();
-
-        await MessageSession.Publish(
-            new ProcessPhotoUploaded
-            {
-                ItemId = itemId,
-                PhotoFileName = photoFileName,
-                OriginalPhotoPath = sourcePath,
-                ThumbnailPhotoPath = thumbnailPath
-            },
-            options);
-    }
-
-    private string GetDisplayPhotoUrl(CollectionItem item)
-    {
-        if (string.IsNullOrWhiteSpace(item.PhotoFileName))
-        {
-            return string.Empty;
-        }
-
-        var thumbnailFileName = $"{Path.GetFileNameWithoutExtension(item.PhotoFileName)}.webp";
-        var thumbnailPhysicalPath = Path.Combine(Env.WebRootPath, "uploads", "thumbnails", thumbnailFileName);
-
-        return File.Exists(thumbnailPhysicalPath)
-            ? $"/uploads/thumbnails/{thumbnailFileName}"
-            : $"/uploads/{item.PhotoFileName}";
     }
 
     private async Task StartEditAsync(int id)
@@ -322,16 +273,7 @@ else
 
         await Context.SaveChangesAsync();
 
-        if (editSelectedFile is not null && itemToUpdate.PhotoFileName is not null)
-        {
-            await PublishPhotoUploadedEventAsync(itemToUpdate.Id, itemToUpdate.PhotoFileName);
-            statusMessage = $"Updated: {itemToUpdate.Name}. Thumbnail processing started in the background.";
-        }
-        else
-        {
-            statusMessage = $"Updated: {itemToUpdate.Name}";
-        }
-
+        statusMessage = $"Updated: {itemToUpdate.Name}";
         editItem = null;
         editSelectedFile = null;
         await LoadItemsAsync();

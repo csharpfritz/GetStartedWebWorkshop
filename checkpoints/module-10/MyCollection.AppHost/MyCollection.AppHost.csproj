@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\MyCollection\MyCollection.csproj" />
     <ProjectReference Include="..\MyCollection.ThumbnailWorker\MyCollection.ThumbnailWorker.csproj" />
-    <ProjectReference Include="..\MyCollection.AiWorker\MyCollection.AiWorker.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -15,7 +15,6 @@ No prior web development experience required! In this workshop, you'll learn mod
 - **App orchestration**: Service communication with NServiceBus
 - **Observability**: Application monitoring with .NET Aspire
 - **AI integration**: Adding AI-powered features with Azure OpenAI
-- **Cloud deployment**: Shipping your app to Azure
 
 ## Prerequisites
 
@@ -37,11 +36,11 @@ Follow the modules in order. Each builds on the previous one.
 | 4 | C# Basics in Context | Variables, types, models, and methods | [Module 4 →](docs/04-csharp-basics.md) |
 | 5 | Git & GitHub | Version control, repositories, and commits | [Module 5 →](docs/05-git-and-github.md) |
 | 6 | Data with EF Core & SQLite | Persist data using Entity Framework Core | [Module 6 →](docs/06-entity-framework.md) |
-| 7 | Aspire & Dev Tunnels | App orchestration, observability, and external access | [Module 7 →](docs/07-aspire.md) |
-| 8 | Photo Capture & Upload | Add camera access and file upload functionality | [Module 8 →](docs/08-photo-upload.md) |
-| 9 | NServiceBus Processing | Image thumbnails and background messaging | [Module 9 →](docs/09-nservicebus.md) |
-| 10 | Add AI | AI-powered image analysis with Agent Framework | [Module 10 →](docs/10-add-ai.md) |
-| 11 | Deploy to Azure | Ship your app to the cloud | Coming soon |
+| 7 | PDF Reports | Generate PDF reports from Blazor with IronPDF | [Module 7 →](docs/07-pdf-reports.md) |
+| 8 | Aspire & Dev Tunnels | App orchestration, observability, and external access | [Module 8 →](docs/08-aspire.md) |
+| 9 | Photo Capture & Upload | Add camera access and file upload functionality | [Module 9 →](docs/09-photo-upload.md) |
+| 10 | NServiceBus Processing | Image thumbnails and background messaging | [Module 10 →](docs/10-nservicebus.md) |
+| 11 | Add AI | AI-powered image analysis with Agent Framework | [Module 11 →](docs/11-add-ai.md) |
 
 ## Checkpoints
 

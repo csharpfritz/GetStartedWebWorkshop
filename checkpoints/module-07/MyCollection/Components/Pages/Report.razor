@@ -1,0 +1,63 @@
+@page "/report"
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
+@using MyCollection.Data
+@using MyCollection.Models
+@inject CollectionContext Context
+
+<PageTitle>Collection Report</PageTitle>
+
+<div class="report-container">
+    <h1>My Collection Report</h1>
+    <p class="report-date">Generated: @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+
+    @if (items.Count == 0)
+    {
+        <p>No items in your collection yet.</p>
+    }
+    else
+    {
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Favorite</th>
+                    <th>Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in items)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@(item.IsFavorite ? "⭐" : "")</td>
+                        <td>@item.DateAdded.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="report-summary">
+            <p><strong>Total Items:</strong> @items.Count</p>
+        </div>
+    }
+</div>
+
+<div class="report-actions">
+    <a href="/api/report/download" class="btn-download" target="_blank">
+        📄 Download as PDF
+    </a>
+</div>
+
+@code {
+    private List<CollectionItem> items = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await Context.CollectionItems
+            .OrderBy(i => i.Name)
+            .ToListAsync();
+    }
+}

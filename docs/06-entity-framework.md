@@ -760,6 +760,6 @@ That can be fun for curiosity, but it is optional. The important point is that y
 ---
 ## Next Module
 
-[Next Module →](07-aspire.md)
+[Next Module →](07-pdf-reports.md)
 
 In Module 7, you will build on this database-backed app by adding Aspire observability, orchestration, and dev tunnel support before you add photo uploads in Module 8.

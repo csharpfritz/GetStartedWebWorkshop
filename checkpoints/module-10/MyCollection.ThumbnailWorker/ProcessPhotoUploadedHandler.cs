@@ -23,14 +23,5 @@ public class ProcessPhotoUploadedHandler(
         logger.LogInformation(
             "Thumbnail created at {ThumbnailPhotoPath}",
             message.ThumbnailPhotoPath);
-
-        await context.Publish(new AnalyzeCollectionImage(
-            CollectionItemId: message.ItemId,
-            OriginalImagePath: message.OriginalPhotoPath,
-            ThumbnailPath: message.ThumbnailPhotoPath));
-
-        logger.LogInformation(
-            "Published AnalyzeCollectionImage for collection item {CollectionItemId}",
-            message.ItemId);
     }
 }

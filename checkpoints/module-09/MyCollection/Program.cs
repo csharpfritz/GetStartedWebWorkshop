@@ -1,20 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using MyCollection.Components;
 using MyCollection.Data;
-using NServiceBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-var endpointConfiguration = new EndpointConfiguration("MyCollection.Web");
-endpointConfiguration.UseSerialization<SystemJsonSerializer>();
-
-var transport = endpointConfiguration.UseTransport<LearningTransport>();
-transport.StorageDirectory(
-    Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, "..", ".learningtransport")));
-
-builder.UseNServiceBus(endpointConfiguration);
+// Add services to the container.
+builder.Services.AddControllers();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -30,6 +23,7 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -39,8 +33,9 @@ if (!app.Environment.IsDevelopment())
 app.UseStatusCodePagesWithReExecute("/not-found");
 app.UseHttpsRedirection();
 app.UseAntiforgery();
-app.MapStaticAssets();
 
+app.MapStaticAssets();
+app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

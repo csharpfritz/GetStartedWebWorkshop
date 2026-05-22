@@ -4,25 +4,11 @@
     <div class="card-body">
         <h2 class="h5 card-title mb-2">@Item.Name</h2>
         <p class="card-text mb-2">@Item.Description</p>
-        <p class="text-body-secondary mb-2">Added on @Item.DateAdded.ToShortDateString()</p>
-
-        @if (!string.IsNullOrWhiteSpace(Item.AiDescription))
-        {
-            <p class="text-muted mb-1">
-                <strong>AI description:</strong> @Item.AiDescription
-            </p>
-        }
-
-        @if (!string.IsNullOrWhiteSpace(Item.AiTags))
-        {
-            <p class="text-muted small mb-2">
-                <strong>AI tags:</strong> @Item.AiTags
-            </p>
-        }
+        <p class="text-body-secondary mb-0">Added on @Item.DateAdded.ToShortDateString()</p>
 
         @if (Item.IsFavorite)
         {
-            <span class="badge text-bg-success">Favorite</span>
+            <span class="badge text-bg-success mt-3">Favorite</span>
         }
     </div>
 </article>

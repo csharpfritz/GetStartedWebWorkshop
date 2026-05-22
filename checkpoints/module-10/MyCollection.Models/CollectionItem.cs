@@ -8,6 +8,4 @@ public class CollectionItem
     public DateTime DateAdded { get; set; } = DateTime.Today;
     public bool IsFavorite { get; set; }
     public string? PhotoFileName { get; set; }
-    public string? AiDescription { get; set; }
-    public string? AiTags { get; set; }
 }

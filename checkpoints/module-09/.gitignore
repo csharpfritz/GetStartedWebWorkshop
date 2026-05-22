@@ -489,8 +489,3 @@ $RECYCLE.BIN/
 MyCollection/wwwroot/uploads/*
 !MyCollection/wwwroot/uploads/.gitkeep
 
-
-MyCollection/wwwroot/uploads/thumbnails/*
-!MyCollection/wwwroot/uploads/thumbnails/.gitkeep
-.learningtransport/
-

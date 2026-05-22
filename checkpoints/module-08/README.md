@@ -1,14 +1,11 @@
-# Module 8 Checkpoint - MyCollection with Photo Uploads and QR Access
+# Module 7 Checkpoint - MyCollection with .NET Aspire
 
-This checkpoint builds on Module 7 by keeping .NET Aspire orchestration, enabling dev tunnel-ready external endpoints, and adding photo uploads plus a QR code for quick mobile access.
+This checkpoint adds .NET Aspire orchestration and dev tunnel-ready external endpoints to the EF Core collection app.
 
 ## Included in this checkpoint
-- `PhotoFileName` on `CollectionItem`
-- Blazor `InputFile` support on the Collection page
-- Server-side file validation and upload saving in `wwwroot/uploads`
-- Thumbnail-style image rendering in the collection list
-- EF Core migration for the photo filename column
-- `.gitkeep` and `.gitignore` rules for the uploads folder
-- `MyCollection.AppHost` with `WithExternalHttpEndpoints()` for Aspire dev tunnels
+- `MyCollection.AppHost` for local orchestration
 - `MyCollection.ServiceDefaults` for telemetry, health checks, and service discovery defaults
-- Home page QR code generation with QRCoder
+- `aspire.config.json` so `aspire run` can locate the AppHost
+- `MyCollection` wired to `AddServiceDefaults()` and `MapDefaultEndpoints()`
+- AppHost `WithExternalHttpEndpoints()` support for Aspire dev tunnels
+- Solution updates for the new projects
