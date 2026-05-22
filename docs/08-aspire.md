@@ -985,17 +985,11 @@ That's the habit to build: treat infrastructure work with the same discipline as
 Because there is still a lot of older Aspire content online, it is worth ending the module with a direct comparison.
 
 | Older guidance | Current guidance |
-
 |---|---|
-
 | `dotnet workload install aspire` | Install the standalone Aspire CLI |
-
 | `dotnet new aspire-apphost` | `aspire init` |
-
 | `dotnet new aspire-servicedefaults` | `aspire init` creates it for solution-based repos |
-
 | `dotnet run --project MyCollection.AppHost` | `aspire run` |
-
 | Separate manual template setup | One CLI-driven initialization flow |
 
 ### The modern mental model
